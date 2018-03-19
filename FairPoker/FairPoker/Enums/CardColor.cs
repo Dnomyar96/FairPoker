@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FairPoker.Enums
 {
-    enum CardColor
+    public enum CardColor
     {
         Hearts,
         Diamonds,

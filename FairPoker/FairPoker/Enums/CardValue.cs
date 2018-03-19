@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace FairPoker.Enums
 {
-    enum CardValues
+    public enum CardValue
     {
-        One,
         Two,
         Three,
         Four,
