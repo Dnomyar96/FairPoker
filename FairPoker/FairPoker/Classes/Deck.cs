@@ -11,6 +11,10 @@ namespace FairPoker.Classes
     {
         private IEnumerable<Card> cards;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="Deck"/> with a list of cards based on the 
+        /// <see cref="CardColor"/> and <see cref="CardValue"/> enums.
+        /// </summary>
         public Deck()
         {
             var cards = new List<Card>();
@@ -28,7 +32,30 @@ namespace FairPoker.Classes
                 }
             }
 
-            this.cards = cards;
+            this.cards = Shuffle(cards);
+        }
+
+        /// <summary>
+        /// Shuffles a list of cards
+        /// Code from StackOverflow: https://stackoverflow.com/a/1262619/7894052
+        /// </summary>
+        /// <param name="deck">The list to shuffle</param>
+        /// <returns>The shuffled list</returns>
+        private List<Card> Shuffle(List<Card> deck)
+        {
+            var n = deck.Count;
+            var random = new Random();
+
+            while(n > 1)
+            {
+                n--;
+                var k = random.Next(n + 1);
+                var card = deck[k];
+                deck[k] = deck[n];
+                deck[n] = card;
+            }
+
+            return deck;
         }
     }
 }
