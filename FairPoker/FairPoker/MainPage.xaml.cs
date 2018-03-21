@@ -1,4 +1,5 @@
 ﻿using System;
+using FairPoker.Classes;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -12,8 +13,15 @@ namespace FairPoker
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
-        int GameState = 1;
+        
+        private int GameState = 1;
+        Deck Cards = new Deck();
+        private Card card1;
+        private Card card2;
+        private Card card3;
+        private Card card4;
+        private Card card5;
+        
 
         public MainPage()
         {
@@ -25,10 +33,11 @@ namespace FairPoker
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-        }
+      
+    }
 
-
-
+       
+        
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
 
@@ -53,24 +62,28 @@ namespace FairPoker
 
         private async void TurnCard()
         {
-
-
             if (GameState == 1)
             {
+                card1 = Cards.DrawCard();
+                card2 = Cards.DrawCard();
+                card3 = Cards.DrawCard();
                 GameState++;
-                CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
-                CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
-                CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
+                CardImage1.Source = new BitmapImage(new Uri(card1.ImgUrl.ToString()));
+                CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
+                CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
             }
             else if (GameState == 2)
             {
                 GameState++;
-                CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
+                card4 = Cards.DrawCard();
+                CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
             }
+
             else if (GameState == 3)
             {
                 GameState++;
-                CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));
+                card5 = Cards.DrawCard();
+                CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
             }
             else
             {

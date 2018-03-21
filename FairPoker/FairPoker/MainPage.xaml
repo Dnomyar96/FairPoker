@@ -118,7 +118,8 @@
                 <Image x:Name="CardImage5"  Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
             </Button>
         </Grid>
-
+        <StackPanel Grid.Column="4" HorizontalAlignment="Left" Height="810" VerticalAlignment="Top" Width="125" Grid.RowSpan="5"/>
+     
     </Grid>
 </Page>
 

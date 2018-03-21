@@ -28,8 +28,8 @@ namespace FairPoker.Classes
                     {
                         Color = color,
                         Value = value,
-                        ImgUrl = ""
-                    });
+                        ImgUrl = "ms-appx:///Assets/Cards/" + (value.ToString() + color.ToString()) +".png"
+                });
                 }
             }
 

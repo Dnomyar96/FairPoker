@@ -14,5 +14,7 @@ namespace FairPoker.Classes
         public CardValue Value { get; set; }
 
         public string ImgUrl { get; set; }
+
+        
     }
 }
