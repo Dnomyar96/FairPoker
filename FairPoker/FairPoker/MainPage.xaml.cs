@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FairPoker.Classes;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,7 +23,9 @@ namespace FairPoker
         private Card card3;
         private Card card4;
         private Card card5;
-        
+
+        private Dealer dealer;
+        private List<Player> players;
 
         public MainPage()
         {
@@ -33,10 +37,31 @@ namespace FairPoker
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-      
-    }
 
-       
+            dealer = new Dealer();
+            players = new List<Player>()
+            {
+                new Player(),
+                new Player()
+            };
+
+            for (var i = 0; i < 2; i++)
+            {
+                foreach (var player in players)
+                {
+                    dealer.DealCard(player);
+                }
+            }
+
+            var playerOneCards = players[0].GetCards().ToArray();
+            var playerTwoCards = players[1].GetCards().ToArray();
+            PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
+            PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
+            PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+            PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+
+            SetScores();
+        }       
         
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
@@ -57,16 +82,36 @@ namespace FairPoker
         private void CardClick(object sender, RoutedEventArgs e)
         {
             TurnCard();
+            SetScores();
+        }
+
+        private void SetScores()
+        {
+            foreach (var player in players)
+            {
+                player.CalculateScore(new List<Card>()
+                {
+                    card1,
+                    card2,
+                    card3,
+                    card4,
+                    card5
+                }.Where(c => c != null).ToList());
+            }
+
+            PlayerOneScore.Text = players[0].GetScore().ToString();
+            PlayerTwoScore.Text = players[1].GetScore().ToString();
         }
 
         private async void TurnCard()
         {
             if (GameState == 1)
             {
-                card1 = Cards.DrawCard();
-                card2 = Cards.DrawCard();
-                card3 = Cards.DrawCard();
                 GameState++;
+                var cards = dealer.DealFlop().ToArray();
+                card1 = cards[0];
+                card2 = cards[1];
+                card3 = cards[2];
                 CardImage1.Source = new BitmapImage(new Uri(card1.ImgUrl.ToString()));
                 CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
                 CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
@@ -74,14 +119,13 @@ namespace FairPoker
             else if (GameState == 2)
             {
                 GameState++;
-                card4 = Cards.DrawCard();
+                card4 = dealer.DealTurn();
                 CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
             }
-
             else if (GameState == 3)
             {
                 GameState++;
-                card5 = Cards.DrawCard();
+                card5 = dealer.DealRiver();
                 CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
             }
             else
