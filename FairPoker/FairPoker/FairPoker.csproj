@@ -99,8 +99,10 @@
     <Compile Include="Classes\Card.cs" />
     <Compile Include="Classes\ChanceCalculator.cs" />
     <Compile Include="Classes\Deck.cs" />
+    <Compile Include="Classes\Scoring.cs" />
     <Compile Include="Enums\CardColor.cs" />
     <Compile Include="Enums\CardValue.cs" />
+    <Compile Include="Enums\Score.cs" />
     <Compile Include="Exceptions\DeckEmptyException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
