@@ -53,8 +53,7 @@ namespace FairPoker
             this.Frame.Navigate(typeof(MainPage));
         }
 
-
-
+        
         private void CardClick(object sender, RoutedEventArgs e)
         {
             TurnCard();
@@ -100,6 +99,15 @@ namespace FairPoker
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+
+        // Handles the Click event on the Button on the page and opens the Popup. 
+        private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
+        {
+   
+                this.Frame.Navigate(typeof(OptionsPage));
+           
         }
     }
 }
