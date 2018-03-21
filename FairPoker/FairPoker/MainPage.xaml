@@ -50,6 +50,46 @@
                 </MenuFlyout>
             </Button.Flyout>
         </Button>
+        <Grid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                    x:Name="PlayerTwoScore"
+                    Grid.Column="0"
+                    Text="Test"
+                    FontSize="32"
+                    Foreground="White"
+                />
+
+            <Button 
+                    x:Name="PlayerTwoCardslot1"
+                    Grid.Column="1" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}">
+                <Image x:Name="PlayerTwoCardImage1"  Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+            </Button>
+
+            <Button 
+                    x:Name="PlayerTwoCardslot2"
+                    Grid.Column="2" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}">
+                <Image x:Name="PlayerTwoCardImage2" Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+            </Button>
+        </Grid>
         <Grid Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -116,6 +156,46 @@
                     Background="{x:Null}"
                     Click="CardClick">
                 <Image x:Name="CardImage5"  Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                    x:Name="PlayerOneScore"
+                    Grid.Column="0"
+                    Text="Test"
+                    FontSize="32"
+                    Foreground="White"
+                />
+
+            <Button 
+                    x:Name="PlayerOneCardslot1"
+                    Grid.Column="1" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}">
+                <Image x:Name="PlayerOneCardImage1"  Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+            </Button>
+
+            <Button 
+                    x:Name="PlayerOneCardslot2"
+                    Grid.Column="2" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}">
+                <Image x:Name="PlayerOneCardImage2" Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
             </Button>
         </Grid>
         <StackPanel Grid.Column="4" HorizontalAlignment="Left" Height="810" VerticalAlignment="Top" Width="125" Grid.RowSpan="5"/>
