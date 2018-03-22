@@ -107,6 +107,7 @@ namespace FairPoker
             var playerOneCards = players[0].GetCards().ToArray();     
             PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
+            
 
             var playerTwoCards = players[1].GetCards().ToArray();
             PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
@@ -160,8 +161,28 @@ namespace FairPoker
                 }.Where(c => c != null).ToList());
             }
 
-         // PlayerOneScore.Text = players[0].GetScore().ToString();
-         // PlayerTwoScore.Text = players[1].GetScore().ToString();
+          PlayerOneTextHand.Text = players[0].GetScore().ToString();
+        
+            if (playerCount > 1)
+            {
+                PlayerTwoTextHand.Text = players[1].GetScore().ToString();
+            }
+            if (playerCount > 2)
+            {
+                PlayerThreeTextHand.Text = players[2].GetScore().ToString();
+            }
+            if (playerCount > 3)
+            {
+                PlayerFourTextHand.Text = players[3].GetScore().ToString();
+            }
+            if (playerCount > 4)
+            {
+                PlayerFiveTextHand.Text = players[4].GetScore().ToString();
+            }
+            if (playerCount > 5)
+            {
+                PlayerSixTextHand.Text = players[5].GetScore().ToString();
+            }
         }
 
         private async void TurnCard()
