@@ -50,7 +50,7 @@
                         <MenuFlyoutItem Text="New Round" Click="NewRound_Click"/>
                         <MenuFlyoutItem Text="Options" Click="ShowPopupOffsetClicked"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Quit"/>
+                        <MenuFlyoutItem Text="Quit" Click="Quit_Click"/>
 
 
                     </MenuFlyout>

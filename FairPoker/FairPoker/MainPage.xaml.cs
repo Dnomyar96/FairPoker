@@ -46,12 +46,18 @@ namespace FairPoker
             DealCards();
             SetScores();
 
-        }                       
-        
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e) {
+            Application.Current.Exit();
+        }
+
+
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
 
         }
+              
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
