@@ -142,7 +142,7 @@ namespace FairPoker
             if (playerCount > 4)
             {
                 var playerFiveCards = players[4].GetCards().ToArray();
-                GridP2.Visibility = Visibility.Visible;
+                GridP5.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
                 {
                     {
@@ -153,7 +153,7 @@ namespace FairPoker
                 if (playerCount > 5)
                 {
                     var playerSixCards = players[5].GetCards().ToArray();
-                    GridP2.Visibility = Visibility.Visible;
+                    GridP6.Visibility = Visibility.Visible;
                     if (Settings.HideOtherPlayersCards == false)
                     {
                         PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
