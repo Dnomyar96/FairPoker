@@ -108,6 +108,8 @@
     <Compile Include="Enums\RoundState.cs" />
     <Compile Include="Enums\Score.cs" />
     <Compile Include="Exceptions\DeckEmptyException.cs" />
+    <Compile Include="Exceptions\NotEnoughCashException.cs" />
+    <Compile Include="Exceptions\PlayerFoldedException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
