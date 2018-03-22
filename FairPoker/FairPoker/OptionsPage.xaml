@@ -55,16 +55,16 @@
             </Button>
             <Grid Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             <TextBlock Text="Players" Grid.Column="2" Margin="70,0,362,34" Grid.Row="3" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom"/>
-            <ToggleSwitch Grid.Column="2" Header="Hide Opponent Cards" HorizontalAlignment="Stretch" Margin="304,0,42,14" Grid.Row="3" VerticalAlignment="Bottom" Height="60"/>
-            <ComboBox Grid.Column="2" PlaceholderText="2" HorizontalAlignment="Stretch" Margin="147,0,289,26" Grid.Row="3" VerticalAlignment="Bottom" Height="32">
+            <ToggleSwitch x:Name="HideCards" Grid.Column="2" Header="Hide Opponent Cards" HorizontalAlignment="Stretch" Margin="304,0,42,14" Grid.Row="3" VerticalAlignment="Bottom" Height="60"/>
+            <ComboBox x:Name="PlayerCount" Grid.Column="2" PlaceholderText="2" HorizontalAlignment="Stretch" Margin="147,0,289,26" Grid.Row="3" VerticalAlignment="Bottom" Height="32">
                 <ComboBoxItem Content="2"/>
                 <ComboBoxItem Content="3"/>
                 <ComboBoxItem Content="4"/>
                 <ComboBoxItem Content="5"/>
                 <ComboBoxItem Content="6"/>
             </ComboBox>
-            <Button Content="Save" Grid.Column="2" HorizontalAlignment="Left" Margin="70,29,0,0" Grid.Row="4" VerticalAlignment="Top" Width="137" Height="32"/>
-            <Button Content="Cancel" Grid.Column="2" HorizontalAlignment="Left" Margin="304,29,0,0" Grid.Row="4" VerticalAlignment="Top" Width="137" Height="32"/>
+            <Button Content="Save" Grid.Column="2" HorizontalAlignment="Left" Margin="70,29,0,0" Grid.Row="4" VerticalAlignment="Top" Width="137" Height="32" Click="Save_Button_Click"/>
+            <Button Content="Cancel" Grid.Column="2" HorizontalAlignment="Left" Margin="304,29,0,0" Grid.Row="4" VerticalAlignment="Top" Width="137" Height="32" Click="Button_Click_1"/>
             <TextBlock Text="Options Menu" FontSize="25" Grid.Column="2" Margin="0,0,0,5" Grid.Row="2" TextWrapping="Wrap" Height="33" VerticalAlignment="Bottom" TextAlignment="Center" HorizontalAlignment="Center" Width="290"/>
         </Grid>
     </Grid>
