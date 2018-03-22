@@ -34,7 +34,7 @@ namespace FairPoker
             this.InitializeComponent();
 
             /// Required Set After Initialisation
-            SetDefaultImages();
+            SetDefaultValues();
 
             dealer = new Dealer();
             players = new List<Player>();          
@@ -68,7 +68,7 @@ namespace FairPoker
 
             gameState = RoundState.PreFlop;
 
-            SetDefaultImages();
+            SetDefaultValues();
             dealer.NewRound();
 
             foreach(var player in players)
@@ -81,25 +81,37 @@ namespace FairPoker
             SetScores();
         }
 
-        private void SetDefaultImages()
+        private void SetDefaultValues()
         {
             CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+
             PlayerOneCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerOneTextHand.Text = "";
+
             PlayerTwoCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerTwoCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerTwoTextHand.Text = "";
+
             PlayerThreeCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerThreeCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerThreeTextHand.Text = "";
+
             PlayerFourCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerFourCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerFourTextHand.Text = "";
+
             PlayerFiveCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerFiveCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerFiveTextHand.Text = "";
+
             PlayerSixCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerSixCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerSixTextHand.Text = "";
         }
 
         private void DealCards()
