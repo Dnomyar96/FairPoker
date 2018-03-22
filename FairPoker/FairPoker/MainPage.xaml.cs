@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FairPoker.Classes;
+using FairPoker.Enums;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -16,7 +17,7 @@ namespace FairPoker
     public sealed partial class MainPage : Page
     {
         
-        private int GameState = 1;
+        private RoundState gameState = RoundState.PreFlop;
         Deck Cards = new Deck();
         private Card card1;
         private Card card2;
@@ -32,11 +33,7 @@ namespace FairPoker
             this.InitializeComponent();
 
             /// Required Set After Initialisation
-            CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetDefaultImages();
 
             dealer = new Dealer();
             players = new List<Player>()
@@ -45,21 +42,7 @@ namespace FairPoker
                 new Player()
             };
 
-            for (var i = 0; i < 2; i++)
-            {
-                foreach (var player in players)
-                {
-                    dealer.DealCard(player);
-                }
-            }
-
-            var playerOneCards = players[0].GetCards().ToArray();
-            var playerTwoCards = players[1].GetCards().ToArray();
-            //PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
-            //PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
-            //PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-            //PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
-
+            DealCards();
             SetScores();
         }       
         
@@ -75,9 +58,52 @@ namespace FairPoker
 
         private void NewRound_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            card1 = null;
+            card2 = null;
+            card3 = null;
+            card4 = null;
+            card5 = null;
+
+            gameState = RoundState.PreFlop;
+
+            SetDefaultImages();
+            dealer.NewRound();
+
+            foreach(var player in players)
+            {
+                player.NewRound();
+            }
+
+            DealCards();
+            SetScores();
         }
 
+        private void SetDefaultImages()
+        {
+            CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+        }
+
+        private void DealCards()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                foreach (var player in players)
+                {
+                    dealer.DealCard(player);
+                }
+            }
+
+            var playerOneCards = players[0].GetCards().ToArray();
+            var playerTwoCards = players[1].GetCards().ToArray();
+            PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
+            PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
+            PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+            PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+        }
 
         private void CardClick(object sender, RoutedEventArgs e)
         {
@@ -105,9 +131,9 @@ namespace FairPoker
 
         private async void TurnCard()
         {
-            if (GameState == 1)
+            if (gameState == RoundState.PreFlop)
             {
-                GameState++;
+                gameState = RoundState.Flop;
                 var cards = dealer.DealFlop().ToArray();
                 card1 = cards[0];
                 card2 = cards[1];
@@ -116,15 +142,15 @@ namespace FairPoker
                 CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
                 CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
             }
-            else if (GameState == 2)
+            else if (gameState == RoundState.Flop)
             {
-                GameState++;
+                gameState = RoundState.Turn;
                 card4 = dealer.DealTurn();
                 CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
             }
-            else if (GameState == 3)
+            else if (gameState == RoundState.Turn)
             {
-                GameState++;
+                gameState = RoundState.River;
                 card5 = dealer.DealRiver();
                 CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
             }
