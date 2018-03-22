@@ -26,7 +26,7 @@ namespace FairPoker
         private Card card5;
 
         private Dealer dealer;
-        private int playerCount = 4;
+        private int playerCount = 6;
         private List<Player> players;
 
         public MainPage()
@@ -37,10 +37,8 @@ namespace FairPoker
             SetDefaultImages();
 
             dealer = new Dealer();
-            players = new List<Player>()
-            {
-                new Player()
-            };
+            players = new List<Player>();
+          
 
             for (var i = 0; i < playerCount; i++)
             {
@@ -96,7 +94,7 @@ namespace FairPoker
         {
          
 
-            for (var i = 0; i < playerCount; i++)
+            for (var i = 0; i < 2; i++)
             {
                 foreach (var player in players)
                 {
