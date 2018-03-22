@@ -15,6 +15,11 @@ namespace FairPoker.Classes
             deck = new Deck();
         }
 
+        public void NewRound()
+        {
+            deck = new Deck();
+        }
+
         public void DealCard(Player player)
         {
             player.GiveCard(deck.DrawCard());

@@ -32,11 +32,7 @@ namespace FairPoker
             this.InitializeComponent();
 
             /// Required Set After Initialisation
-            CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetDefaultImages();
 
             dealer = new Dealer();
             players = new List<Player>()
@@ -45,21 +41,7 @@ namespace FairPoker
                 new Player()
             };
 
-            for (var i = 0; i < 2; i++)
-            {
-                foreach (var player in players)
-                {
-                    dealer.DealCard(player);
-                }
-            }
-
-            var playerOneCards = players[0].GetCards().ToArray();
-            var playerTwoCards = players[1].GetCards().ToArray();
-            PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
-            PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
-            PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-            PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
-
+            DealCards();
             SetScores();
         }       
         
@@ -75,10 +57,53 @@ namespace FairPoker
 
         private void NewRound_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            card1 = null;
+            card2 = null;
+            card3 = null;
+            card4 = null;
+            card5 = null;
+
+            GameState = 1;
+
+            SetDefaultImages();
+            dealer.NewRound();
+
+            foreach(var player in players)
+            {
+                player.NewRound();
+            }
+
+            DealCards();
+            SetScores();
         }
 
-        
+        private void SetDefaultImages()
+        {
+            CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+        }
+
+        private void DealCards()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                foreach (var player in players)
+                {
+                    dealer.DealCard(player);
+                }
+            }
+
+            var playerOneCards = players[0].GetCards().ToArray();
+            var playerTwoCards = players[1].GetCards().ToArray();
+            PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
+            PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
+            PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+            PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+        }
+
         private void CardClick(object sender, RoutedEventArgs e)
         {
             TurnCard();

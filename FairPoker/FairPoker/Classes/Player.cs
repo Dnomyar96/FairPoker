@@ -12,12 +12,21 @@ namespace FairPoker.Classes
         private List<Card> hand;
         private int cash;
         private Score score;
+        private bool hasFolded;
 
         public Player()
         {
             hand = new List<Card>();
             cash = 1000;
             score = Score.HighCard;
+            hasFolded = false;
+        }
+
+        public void NewRound()
+        {
+            hand = new List<Card>();
+            score = Score.HighCard;
+            hasFolded = false;
         }
 
         public void GiveCard(Card card)
@@ -45,12 +54,12 @@ namespace FairPoker.Classes
             throw new NotImplementedException();
         }
 
-        public void Bet()
+        public void Bet(int amount)
         {
             throw new NotImplementedException();
         }
 
-        public void Raise()
+        public void Raise(int amount)
         {
             throw new NotImplementedException();
         }
