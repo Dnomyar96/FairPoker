@@ -194,6 +194,7 @@
     <Content Include="Assets\Cards\yellow_back.png" />
     <Content Include="Assets\Stenden.png" />
     <Content Include="Assets\Table.png" />
+    <Content Include="Assets\poker-chip.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
