@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FairPoker.Classes;
+using FairPoker.Enums;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -16,7 +17,7 @@ namespace FairPoker
     public sealed partial class MainPage : Page
     {
         
-        private int GameState = 1;
+        private RoundState gameState = RoundState.PreFlop;
         Deck Cards = new Deck();
         private Card card1;
         private Card card2;
@@ -63,7 +64,7 @@ namespace FairPoker
             card4 = null;
             card5 = null;
 
-            GameState = 1;
+            gameState = RoundState.PreFlop;
 
             SetDefaultImages();
             dealer.NewRound();
@@ -130,9 +131,9 @@ namespace FairPoker
 
         private async void TurnCard()
         {
-            if (GameState == 1)
+            if (gameState == RoundState.PreFlop)
             {
-                GameState++;
+                gameState = RoundState.Flop;
                 var cards = dealer.DealFlop().ToArray();
                 card1 = cards[0];
                 card2 = cards[1];
@@ -141,15 +142,15 @@ namespace FairPoker
                 CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
                 CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
             }
-            else if (GameState == 2)
+            else if (gameState == RoundState.Flop)
             {
-                GameState++;
+                gameState = RoundState.Turn;
                 card4 = dealer.DealTurn();
                 CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
             }
-            else if (GameState == 3)
+            else if (gameState == RoundState.Turn)
             {
-                GameState++;
+                gameState = RoundState.River;
                 card5 = dealer.DealRiver();
                 CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
             }

@@ -12,21 +12,21 @@ namespace FairPoker.Classes
         private List<Card> hand;
         private int cash;
         private Score score;
-        private bool hasFolded;
+        private PlayerState state;
 
         public Player()
         {
             hand = new List<Card>();
             cash = 1000;
             score = Score.HighCard;
-            hasFolded = false;
+            state = PlayerState.NotPlayed;
         }
 
-        public void NewRound()
+        public void NewRound(PlayerState playerState = PlayerState.NotPlayed)
         {
             hand = new List<Card>();
             score = Score.HighCard;
-            hasFolded = false;
+            state = playerState;
         }
 
         public void GiveCard(Card card)
