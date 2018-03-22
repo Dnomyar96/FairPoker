@@ -105,32 +105,34 @@ namespace FairPoker
             var playerOneCards = players[0].GetCards().ToArray();     
             PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
-            
 
-            var playerTwoCards = players[1].GetCards().ToArray();
-            PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-            PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+            if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
+            {
+                var playerTwoCards = players[1].GetCards().ToArray();
+                PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+                PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+            }
 
-            if (playerCount > 2)
+            if ((playerCount > 2) && (Settings.HideOtherPlayersCards == false))
             {
                 var playerThreeCards = players[2].GetCards().ToArray();
                 PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
                 PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
             }
-            if (playerCount > 3)
+            if ((playerCount > 3) && (Settings.HideOtherPlayersCards == false))
             {
 
                 var playerFourCards = players[3].GetCards().ToArray();
                 PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
                 PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
             }
-            if (playerCount > 4)
+            if ((playerCount > 4) && (Settings.HideOtherPlayersCards == false))
             {
                 var playerFiveCards = players[4].GetCards().ToArray();
                 PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
                 PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
             }
-            if (playerCount > 5)
+            if ((playerCount > 5) && (Settings.HideOtherPlayersCards == false))
             {
                 var playerSixCards = players[5].GetCards().ToArray();
                 PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
