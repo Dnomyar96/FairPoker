@@ -245,12 +245,7 @@
                   <TextBlock x:Name="PlayerSixTextHand" Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
         </Grid>
-        
-
     </Grid>
-
- 
-
 </Page>
 
 
