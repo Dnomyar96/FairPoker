@@ -26,6 +26,7 @@ namespace FairPoker
         private Card card5;
 
         private Dealer dealer;
+        private int playerCount = 2;
         private List<Player> players;
 
         public MainPage()
@@ -38,9 +39,13 @@ namespace FairPoker
             dealer = new Dealer();
             players = new List<Player>()
             {
-                new Player(),
                 new Player()
             };
+
+            for (var i = 0; i < playerCount; i++)
+            {
+                players.Add(new Player());
+            }
 
             DealCards();
             SetScores();
@@ -89,7 +94,9 @@ namespace FairPoker
 
         private void DealCards()
         {
-            for (var i = 0; i < 2; i++)
+         
+
+            for (var i = 0; i < playerCount; i++)
             {
                 foreach (var player in players)
                 {
@@ -97,13 +104,41 @@ namespace FairPoker
                 }
             }
 
-            var playerOneCards = players[0].GetCards().ToArray();
+            var playerOneCards = players[0].GetCards().ToArray();     
+
+            PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
+            PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
+
             var playerTwoCards = players[1].GetCards().ToArray();
-            //PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
-            //PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
-            //PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-            //PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
-        }
+            PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+            PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+
+            if (playerCount > 2)
+            {
+                var playerThreeCards = players[2].GetCards().ToArray();
+                PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
+                PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
+            }
+           else if (playerCount > 3)
+            {
+
+                var playerFourCards = players[3].GetCards().ToArray();
+                PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
+                PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
+            }
+            else if (playerCount > 4)
+            {
+                var playerFiveCards = players[4].GetCards().ToArray();
+                PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
+                PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
+            }
+            else if (playerCount > 5)
+            {
+                var playerSixCards = players[5].GetCards().ToArray();
+                PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
+                PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
+            }
+        }       
 
         private void CardClick(object sender, RoutedEventArgs e)
         {
