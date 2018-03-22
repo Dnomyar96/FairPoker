@@ -26,7 +26,7 @@ namespace FairPoker
         private Card card5;
 
         private Dealer dealer;
-        private int playerCount = 2;
+        private int playerCount = 4;
         private List<Player> players;
 
         public MainPage()
@@ -46,9 +46,9 @@ namespace FairPoker
             {
                 players.Add(new Player());
             }
-
             DealCards();
             SetScores();
+
         }       
         
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
@@ -105,7 +105,6 @@ namespace FairPoker
             }
 
             var playerOneCards = players[0].GetCards().ToArray();     
-
             PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
 
@@ -119,25 +118,26 @@ namespace FairPoker
                 PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
                 PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
             }
-           else if (playerCount > 3)
+            if (playerCount > 3)
             {
 
                 var playerFourCards = players[3].GetCards().ToArray();
-                PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
+                PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
                 PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
             }
-            else if (playerCount > 4)
+            if (playerCount > 4)
             {
                 var playerFiveCards = players[4].GetCards().ToArray();
-                PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
+                PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
                 PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
             }
-            else if (playerCount > 5)
+            if (playerCount > 5)
             {
                 var playerSixCards = players[5].GetCards().ToArray();
-                PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
+                PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
                 PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
             }
+            SetScores();
         }       
 
         private void CardClick(object sender, RoutedEventArgs e)
@@ -160,8 +160,8 @@ namespace FairPoker
                 }.Where(c => c != null).ToList());
             }
 
-          // PlayerOneScore.Text = players[0].GetScore().ToString();
-          // PlayerTwoScore.Text = players[1].GetScore().ToString();
+         // PlayerOneScore.Text = players[0].GetScore().ToString();
+         // PlayerTwoScore.Text = players[1].GetScore().ToString();
         }
 
         private async void TurnCard()
