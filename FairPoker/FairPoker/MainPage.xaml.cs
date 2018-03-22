@@ -42,12 +42,10 @@ namespace FairPoker
             for (var i = 0; i < playerCount; i++)
             {
                 players.Add(new Player());
-            }
-           
+            }           
             DealCards();
             SetScores();
 
-  
         }                       
         
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
@@ -78,6 +76,7 @@ namespace FairPoker
                 player.NewRound();
             }
 
+            
             DealCards();
             SetScores();
         }
@@ -89,6 +88,18 @@ namespace FairPoker
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerOneCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerOneCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerTwoCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerTwoCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerThreeCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerThreeCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerFourCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerFourCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerFiveCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerFiveCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerSixCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            PlayerSixCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
         }
 
         private void DealCards()
