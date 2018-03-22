@@ -66,6 +66,8 @@
             <Button Content="Save" Grid.Column="2" HorizontalAlignment="Left" Margin="70,29,0,0" Grid.Row="4" VerticalAlignment="Top" Width="137" Height="32" Click="Save_Button_Click" Foreground="White" />
             <Button Content="Cancel" Grid.Column="2" HorizontalAlignment="Left" Margin="304,29,0,0" Grid.Row="4" VerticalAlignment="Top" Width="137" Height="32" Click="Button_Click_1" Foreground="White" />
             <TextBlock Text="Options Menu"  FontSize="35" Grid.Column="2" Margin="105,0,105,11" Grid.Row="2" TextWrapping="Wrap" Height="51" VerticalAlignment="Bottom" TextAlignment="Center" HorizontalAlignment="Center" Width="290" Foreground="White" />
+            <ToggleSwitch x:Name="HideChances" Grid.Column="2" Header="Hide Combo Chances" HorizontalAlignment="Stretch" Margin="304,0,42,74" Grid.Row="3" VerticalAlignment="Bottom" Height="60" Foreground="White" />
+            <ToggleSwitch x:Name="SoundEffects" Grid.Column="2" Header="Enable SoundEffects" HorizontalAlignment="Stretch" Margin="70,0,276,74" Grid.Row="3" VerticalAlignment="Bottom" Height="60" Foreground="White" />
         </Grid>
     </Grid>
 </Page>

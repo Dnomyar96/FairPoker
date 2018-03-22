@@ -11,11 +11,16 @@ namespace FairPoker.Classes
         public static int PlayerCount { get; set; }
 
         public static bool HideOtherPlayersCards { get; set; }
+        public static bool HideChances { get; set; }
+        public static bool SoundEffects { get; set; }
+
 
         static Settings()
         {
             PlayerCount = 4;
             HideOtherPlayersCards = true;
+            HideChances = true;
+            SoundEffects = true;
         }
     }
 }

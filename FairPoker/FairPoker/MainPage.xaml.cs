@@ -6,6 +6,7 @@ using FairPoker.Enums;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.Media.Playback;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -17,7 +18,10 @@ namespace FairPoker
     public sealed partial class MainPage : Page
     {
 
+        // GameState
         private RoundState gameState = RoundState.PreFlop;
+
+        // Table Cards
         Deck Cards = new Deck();
         private Card card1;
         private Card card2;
@@ -25,14 +29,19 @@ namespace FairPoker
         private Card card4;
         private Card card5;
 
+        //Dealer and Players
         private Dealer dealer;
         private int playerCount = Settings.PlayerCount;
         private List<Player> players;
 
+        //Sounds
+        MediaPlayer Audio;
+
         public MainPage()
         {
+         
             this.InitializeComponent();
-
+            Audio = new MediaPlayer();
             /// Required Set After Initialisation
             SetDefaultValues();
 
@@ -44,7 +53,7 @@ namespace FairPoker
                 players.Add(new Player());
             }           
             DealCards();
-            SetScores();
+            SetScores();       
 
         }
 
@@ -52,6 +61,26 @@ namespace FairPoker
             Application.Current.Exit();
         }
 
+        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Check Logic
+        }
+        private void FoldButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Fold Logic
+        }
+        private void CallButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Call Logic
+        }
+        private void RaiseButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Raise Logic
+            if (Settings.SoundEffects)
+            {
+                CoinAudio();
+            }
+        }
 
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
@@ -118,6 +147,11 @@ namespace FairPoker
             PlayerSixCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerSixCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerSixTextHand.Text = "";
+
+            if (!Settings.HideChances)
+            {
+                ChanceList.Visibility = Visibility.Visible;
+            }
         }
 
         private void DealCards()
@@ -239,8 +273,29 @@ namespace FairPoker
             }
         }
 
+       private async void CardAudio()
+        {
+            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
+            Windows.Storage.StorageFile file = await folder.GetFileAsync(@"card.wav");
+            Audio.AutoPlay = false;
+            Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
+            Audio.Volume = 0.3;
+            Audio.Play();
+        }
+        private async void CoinAudio()
+        {
+            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
+            Windows.Storage.StorageFile file = await folder.GetFileAsync(@"chips.wav");
+            Audio.AutoPlay = false;
+            Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
+            Audio.Volume = 0.3;
+            Audio.Play();
+        }
+
         private async void TurnCard()
         {
+        
+
             if (gameState == RoundState.PreFlop)
             {
                 gameState = RoundState.Flop;
@@ -251,18 +306,30 @@ namespace FairPoker
                 CardImage1.Source = new BitmapImage(new Uri(card1.ImgUrl.ToString()));
                 CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
                 CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
+                if (Settings.SoundEffects)
+                {
+                    CardAudio();
+                }
             }
             else if (gameState == RoundState.Flop)
             {
                 gameState = RoundState.Turn;
                 card4 = dealer.DealTurn();
                 CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
+                if (Settings.SoundEffects)
+                {
+                    CardAudio();
+                }
             }
             else if (gameState == RoundState.Turn)
             {
                 gameState = RoundState.River;
                 card5 = dealer.DealRiver();
                 CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
+                if (Settings.SoundEffects)
+                {
+                    CardAudio();
+                }
             }
             else
             {

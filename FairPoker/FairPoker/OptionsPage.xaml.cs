@@ -28,6 +28,8 @@ namespace FairPoker
             this.InitializeComponent();
             PlayerCount.SelectedIndex = Settings.PlayerCount - 2;
             HideCards.IsOn = Settings.HideOtherPlayersCards;
+            HideChances.IsOn = Settings.HideChances;
+            SoundEffects.IsOn = Settings.SoundEffects;
         }
 
         // Handles the Click event on the Button on the page and opens the Popup. 
@@ -57,6 +59,8 @@ namespace FairPoker
                 Settings.PlayerCount = 2;
 
             Settings.HideOtherPlayersCards = HideCards.IsOn;
+            Settings.HideChances = HideChances.IsOn;
+            Settings.SoundEffects = SoundEffects.IsOn;
 
             this.Frame.Navigate(typeof(MainPage));
         }

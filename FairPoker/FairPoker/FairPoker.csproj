@@ -126,6 +126,7 @@
     <None Include="FairPoker_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\17177-200.png" />
     <Content Include="Assets\Background.jpg" />
     <Content Include="Assets\Background2.jpg" />
     <Content Include="Assets\Cards\TenClovers.png" />
@@ -192,6 +193,8 @@
     <Content Include="Assets\Cards\QueenSpades.png" />
     <Content Include="Assets\Cards\red_back.png" />
     <Content Include="Assets\Cards\yellow_back.png" />
+    <Content Include="Assets\card.wav" />
+    <Content Include="Assets\chips.wav" />
     <Content Include="Assets\Stenden.png" />
     <Content Include="Assets\Table.png" />
     <Content Include="Assets\poker-chip.png" />
