@@ -16,7 +16,7 @@ namespace FairPoker
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        
+
         private RoundState gameState = RoundState.PreFlop;
         Deck Cards = new Deck();
         private Card card1;
@@ -37,17 +37,18 @@ namespace FairPoker
             SetDefaultImages();
 
             dealer = new Dealer();
-            players = new List<Player>();
-          
+            players = new List<Player>();          
 
             for (var i = 0; i < playerCount; i++)
             {
                 players.Add(new Player());
             }
+           
             DealCards();
             SetScores();
 
-        }       
+  
+        }                       
         
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
@@ -92,8 +93,6 @@ namespace FairPoker
 
         private void DealCards()
         {
-         
-
             for (var i = 0; i < 2; i++)
             {
                 foreach (var player in players)
@@ -102,44 +101,70 @@ namespace FairPoker
                 }
             }
 
-            var playerOneCards = players[0].GetCards().ToArray();     
+            var playerOneCards = players[0].GetCards().ToArray();
             PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
 
-            if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 1)
             {
                 var playerTwoCards = players[1].GetCards().ToArray();
-                PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-                PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+                GridP2.Visibility = Visibility.Visible;
+                if (Settings.HideOtherPlayersCards == false)
+                {
+                    PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+                    PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+                }
             }
 
-            if ((playerCount > 2) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 2)
             {
+
                 var playerThreeCards = players[2].GetCards().ToArray();
-                PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
-                PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
+                GridP3.Visibility = Visibility.Visible;
+                if (Settings.HideOtherPlayersCards == false)
+                {
+                    PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
+                    PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
+                }
             }
-            if ((playerCount > 3) && (Settings.HideOtherPlayersCards == false))
-            {
 
+            if (playerCount > 3)
+            {
                 var playerFourCards = players[3].GetCards().ToArray();
-                PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
-                PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
+                GridP4.Visibility = Visibility.Visible;
+                if (Settings.HideOtherPlayersCards == false)
+                {
+                    PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
+                    PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
+                }
             }
-            if ((playerCount > 4) && (Settings.HideOtherPlayersCards == false))
+
+            if (playerCount > 4)
             {
                 var playerFiveCards = players[4].GetCards().ToArray();
-                PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
-                PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
+                GridP2.Visibility = Visibility.Visible;
+                if (Settings.HideOtherPlayersCards == false)
+                {
+                    {
+                        PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
+                        PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
+                    }
+                }
+                if (playerCount > 5)
+                {
+                    var playerSixCards = players[5].GetCards().ToArray();
+                    GridP2.Visibility = Visibility.Visible;
+                    if (Settings.HideOtherPlayersCards == false)
+                    {
+                        PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
+                        PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
+                    }
+                }
+                SetScores();
+                }
             }
-            if ((playerCount > 5) && (Settings.HideOtherPlayersCards == false))
-            {
-                var playerSixCards = players[5].GetCards().ToArray();
-                PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
-                PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
-            }
-            SetScores();
-        }       
+
+ 
 
         private void CardClick(object sender, RoutedEventArgs e)
         {
@@ -163,23 +188,23 @@ namespace FairPoker
 
           PlayerOneTextHand.Text = players[0].GetScore().ToString();
         
-            if (playerCount > 1)
+            if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerTwoTextHand.Text = players[1].GetScore().ToString();
             }
-            if (playerCount > 2)
+            if ((playerCount > 2) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerThreeTextHand.Text = players[2].GetScore().ToString();
             }
-            if (playerCount > 3)
+            if ((playerCount > 3) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerFourTextHand.Text = players[3].GetScore().ToString();
             }
-            if (playerCount > 4)
+            if ((playerCount > 4) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerFiveTextHand.Text = players[4].GetScore().ToString();
             }
-            if (playerCount > 5)
+            if ((playerCount > 5) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerSixTextHand.Text = players[5].GetScore().ToString();
             }
@@ -219,8 +244,59 @@ namespace FairPoker
                     PrimaryButtonText = "Ok"
                 };
                 ContentDialogResult result = await tempDebugDialog.ShowAsync();
+                ShowAllCards();
             }
         }
+
+        private void ShowAllCards()
+        {            
+            if (playerCount > 1)
+            {
+                var playerTwoCards = players[1].GetCards().ToArray();
+                GridP2.Visibility = Visibility.Visible;            
+                PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
+                PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
+                PlayerTwoTextHand.Text = players[1].GetScore().ToString();
+            }
+
+            if (playerCount > 2)
+            {
+
+                var playerThreeCards = players[2].GetCards().ToArray();
+                GridP3.Visibility = Visibility.Visible;
+                PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
+                PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
+                PlayerThreeTextHand.Text = players[2].GetScore().ToString();
+            }
+
+            if (playerCount > 3)
+            {
+                var playerFourCards = players[3].GetCards().ToArray();
+                GridP4.Visibility = Visibility.Visible;               
+                PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
+                PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
+                PlayerFourTextHand.Text = players[3].GetScore().ToString();
+            }
+
+            if (playerCount > 4)
+            {
+                var playerFiveCards = players[4].GetCards().ToArray();
+                GridP2.Visibility = Visibility.Visible;
+                PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
+                PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
+                PlayerFiveTextHand.Text = players[4].GetScore().ToString();
+            }
+
+            if (playerCount > 5)
+            {
+                var playerSixCards = players[5].GetCards().ToArray();
+                GridP2.Visibility = Visibility.Visible;
+                PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
+                PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
+                PlayerSixTextHand.Text = players[5].GetScore().ToString();
+            }
+        }
+    
 
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
