@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FairPoker.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace FairPoker
         public OptionsPage()
         {
             this.InitializeComponent();
+            PlayerCount.SelectedIndex = Settings.PlayerCount - 2;
+            HideCards.IsOn = Settings.HideOtherPlayersCards;
         }
 
         // Handles the Click event on the Button on the page and opens the Popup. 
@@ -36,7 +39,7 @@ namespace FairPoker
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void NewRound_Click(object sender, RoutedEventArgs e)
@@ -44,6 +47,23 @@ namespace FairPoker
             this.Frame.Navigate(typeof(MainPage));
         }
 
+        private void Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var playercountValue = (ComboBoxItem)PlayerCount.SelectedValue;
 
+            if (playercountValue != null)
+                Settings.PlayerCount = int.Parse(playercountValue.Content.ToString());
+            else
+                Settings.PlayerCount = 2;
+
+            Settings.HideOtherPlayersCards = HideCards.IsOn;
+
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
     }
 }

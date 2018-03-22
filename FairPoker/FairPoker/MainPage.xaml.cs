@@ -26,7 +26,7 @@ namespace FairPoker
         private Card card5;
 
         private Dealer dealer;
-        private int playerCount = 6;
+        private int playerCount = Settings.PlayerCount;
         private List<Player> players;
 
         public MainPage()
