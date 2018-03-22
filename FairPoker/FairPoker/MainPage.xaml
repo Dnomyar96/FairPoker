@@ -159,10 +159,10 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <TextBlock Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <Image x:Name="PlayerOneCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerOneCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerOneTextPlayer" Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                <TextBlock x:Name="PlayerOneTextHand" Text="Straight " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
             
             <!-- P2 -->
@@ -175,10 +175,10 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <TextBlock Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <Image x:Name="PlayerTwoCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerTwoCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerTwoTextPlayer" Text="Player 2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                <TextBlock x:Name="PlayerTwoTextHand" Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
             
             <!-- P3 -->
@@ -191,10 +191,10 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <TextBlock Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+               <TextBlock x:Name="PlayerThreeTextPlayer" Text="Player 3" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+               <TextBlock x:Name="PlayerThreeTextHand" Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
 
             <!-- P4 -->
@@ -207,10 +207,10 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <TextBlock Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerFourTextPlayer" Text="Player 4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                <TextBlock x:Name="PlayerFourTextHand" Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
             
             <!-- P5 -->
@@ -223,10 +223,10 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <TextBlock Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerFiveTextPlayer" Text="Player 5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                <TextBlock x:Name="PlayerFiveTextHand" Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
 
             <!-- P6 -->
@@ -239,18 +239,13 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image Source="Assets/Cards/FiveClovers.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <TextBlock Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                  <TextBlock x:Name="PlayerSixTextPlayer" Text="Player 6" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                  <TextBlock x:Name="PlayerSixTextHand" Text="Straight" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
             </Grid>
         </Grid>
-        
-
     </Grid>
-
- 
-
 </Page>
 
 
