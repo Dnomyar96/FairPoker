@@ -97,11 +97,25 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Card.cs" />
+    <Compile Include="Classes\ChanceCalculator.cs" />
+    <Compile Include="Classes\Dealer.cs" />
     <Compile Include="Classes\Deck.cs" />
+    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Scoring.cs" />
+    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Enums\CardColor.cs" />
     <Compile Include="Enums\CardValue.cs" />
+    <Compile Include="Enums\PlayerState.cs" />
+    <Compile Include="Enums\RoundState.cs" />
+    <Compile Include="Enums\Score.cs" />
+    <Compile Include="Exceptions\DeckEmptyException.cs" />
+    <Compile Include="Exceptions\NotEnoughCashException.cs" />
+    <Compile Include="Exceptions\PlayerFoldedException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsPage.xaml.cs">
+      <DependentUpon>OptionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -112,6 +126,78 @@
     <None Include="FairPoker_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\17177-200.png" />
+    <Content Include="Assets\Background.jpg" />
+    <Content Include="Assets\Background2.jpg" />
+    <Content Include="Assets\Cards\TenClovers.png" />
+    <Content Include="Assets\Cards\TenDiamonds.png" />
+    <Content Include="Assets\Cards\TenHearts.png" />
+    <Content Include="Assets\Cards\TenSpades.png" />
+    <Content Include="Assets\Cards\TwoClovers.png" />
+    <Content Include="Assets\Cards\TwoDiamonds.png" />
+    <Content Include="Assets\Cards\TwoHearts.png" />
+    <Content Include="Assets\Cards\TwoSpades.png" />
+    <Content Include="Assets\Cards\ThreeClovers.png" />
+    <Content Include="Assets\Cards\ThreeDiamonds.png" />
+    <Content Include="Assets\Cards\ThreeHearts.png" />
+    <Content Include="Assets\Cards\ThreeSpades.png" />
+    <Content Include="Assets\Cards\FourClovers.png" />
+    <Content Include="Assets\Cards\FourDiamonds.png" />
+    <Content Include="Assets\Cards\FourHearts.png" />
+    <Content Include="Assets\Cards\FourSpades.png" />
+    <Content Include="Assets\Cards\FiveClovers.png" />
+    <Content Include="Assets\Cards\FiveDiamonds.png" />
+    <Content Include="Assets\Cards\FiveHearts.png" />
+    <Content Include="Assets\Cards\FiveSpades.png" />
+    <Content Include="Assets\Cards\SixClovers.png" />
+    <Content Include="Assets\Cards\SixDiamonds.png" />
+    <Content Include="Assets\Cards\SixHearts.png" />
+    <Content Include="Assets\Cards\SixSpades.png" />
+    <Content Include="Assets\Cards\SevenClovers.png" />
+    <Content Include="Assets\Cards\SevenDiamonds.png" />
+    <Content Include="Assets\Cards\SevenHearts.png" />
+    <Content Include="Assets\Cards\SevenSpades.png" />
+    <Content Include="Assets\Cards\EightClovers.png" />
+    <Content Include="Assets\Cards\EightDiamonds.png" />
+    <Content Include="Assets\Cards\EightHearts.png" />
+    <Content Include="Assets\Cards\EightSpades.png" />
+    <Content Include="Assets\Cards\NineClovers.png" />
+    <Content Include="Assets\Cards\NineDiamonds.png" />
+    <Content Include="Assets\Cards\NineHearts.png" />
+    <Content Include="Assets\Cards\NineSpades.png" />
+    <Content Include="Assets\Cards\AceClovers.png" />
+    <Content Include="Assets\Cards\aces.png" />
+    <Content Include="Assets\Cards\AceDiamonds.png" />
+    <Content Include="Assets\Cards\AceHearts.png" />
+    <Content Include="Assets\Cards\AceSpades.png" />
+    <Content Include="Assets\Cards\back_cards-07.png" />
+    <Content Include="Assets\Cards\blue_back.png" />
+    <Content Include="Assets\Cards\gray_back.png" />
+    <Content Include="Assets\Cards\green_back.png" />
+    <Content Include="Assets\Cards\honors_spade-14.png" />
+    <Content Include="Assets\Cards\honor_clubs.png" />
+    <Content Include="Assets\Cards\honor_diamond.png" />
+    <Content Include="Assets\Cards\honor_heart-14.png" />
+    <Content Include="Assets\Cards\JackClovers.png" />
+    <Content Include="Assets\Cards\JackDiamonds.png" />
+    <Content Include="Assets\Cards\JackHearts.png" />
+    <Content Include="Assets\Cards\JackSpades.png" />
+    <Content Include="Assets\Cards\KingClovers.png" />
+    <Content Include="Assets\Cards\KingDiamonds.png" />
+    <Content Include="Assets\Cards\KingHearts.png" />
+    <Content Include="Assets\Cards\KingSpades.png" />
+    <Content Include="Assets\Cards\purple_back.png" />
+    <Content Include="Assets\Cards\QueenClovers.png" />
+    <Content Include="Assets\Cards\QueenDiamonds.png" />
+    <Content Include="Assets\Cards\QueenHearts.png" />
+    <Content Include="Assets\Cards\QueenSpades.png" />
+    <Content Include="Assets\Cards\red_back.png" />
+    <Content Include="Assets\Cards\yellow_back.png" />
+    <Content Include="Assets\card.wav" />
+    <Content Include="Assets\chips.wav" />
+    <Content Include="Assets\Stenden.png" />
+    <Content Include="Assets\Table.png" />
+    <Content Include="Assets\poker-chip.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -129,6 +215,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OptionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

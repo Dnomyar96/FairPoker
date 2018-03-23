@@ -1,4 +1,5 @@
 ﻿using FairPoker.Enums;
+using FairPoker.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FairPoker.Classes
 {
     public class Deck
     {
-        private IEnumerable<Card> cards;
+        private List<Card> cards;
 
         /// <summary>
         /// Creates a new instance of <see cref="Deck"/> with a list of cards based on the 
@@ -27,8 +28,8 @@ namespace FairPoker.Classes
                     {
                         Color = color,
                         Value = value,
-                        ImgUrl = ""
-                    });
+                        ImgUrl = "ms-appx:///Assets/Cards/" + (value.ToString() + color.ToString()) +".png"
+                });
                 }
             }
 
@@ -36,7 +37,7 @@ namespace FairPoker.Classes
         }
 
         /// <summary>
-        /// Shuffles a list of cards
+        /// Shuffles a list of cards.
         /// Code from StackOverflow: https://stackoverflow.com/a/1262619/7894052
         /// </summary>
         /// <param name="deck">The list to shuffle</param>
@@ -56,6 +57,22 @@ namespace FairPoker.Classes
             }
 
             return deck;
+        }
+
+        /// <summary>
+        /// Draw the first card from the deck. The card gets removed from the deck.
+        /// </summary>
+        /// <returns>The first card from the deck.</returns>
+        /// <exception cref="DeckEmptyException">Throws when the deck is empty</exception>
+        public Card DrawCard()
+        {
+            if(cards.Count() < 1 || cards == null)
+                throw new DeckEmptyException();
+
+            var card = cards.Take(1).First();
+            cards.Remove(card);
+
+            return card;
         }
     }
 }

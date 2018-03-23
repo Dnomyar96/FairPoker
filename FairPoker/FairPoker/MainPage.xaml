@@ -6,8 +6,313 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    </Page.Resources>
+    <Grid x:Name="LayoutRoot">
 
+        <!-- MainGrid -->
+        <Grid Background="Red">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="125"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="125"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+           
+            
+            <!-- Background -->
+            <Image Source="ms-appx:///Assets/Background2.jpg"  
+           Stretch="Fill" 
+           Grid.Row="0" 
+           Grid.ColumnSpan="5" 
+           Grid.RowSpan="5"/>
+
+            <!-- Table -->
+            <Image Source="ms-appx:///Assets/Table.png" 
+               Grid.Row="1" 
+               Grid.Column="1" 
+               Grid.ColumnSpan="3"
+               Grid.RowSpan="3"  />
+
+
+            <!-- Cards on the Table-->
+            <Grid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="500" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <Button 
+                    x:Name="Cardslot1"
+                    Grid.Column="0" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}"
+                    Click="CardClick">
+                    <Image x:Name="CardImage1" Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+                </Button>
+
+                <Button 
+                    x:Name="Cardslot2"
+                    Grid.Column="1" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}"
+                    Click="CardClick">
+                    <Image x:Name="CardImage2"  Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+                </Button>
+
+                <Button 
+                    x:Name="Cardslot3"
+                    Grid.Column="2" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}"
+                    Click="CardClick">
+                    <Image x:Name="CardImage3" Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+                </Button>
+
+                <Button 
+                    x:Name="Cardslot4"
+                    Grid.Column="3" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}"
+                    Click="CardClick">
+                    <Image x:Name="CardImage4" Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="145" MinWidth="20"/>
+                </Button>
+
+                <Button 
+                    x:Name="Cardslot5"
+                    Grid.Column="4" 
+                    HorizontalAlignment="Stretch"  
+                    VerticalAlignment="Stretch" 
+                    BorderBrush="{x:Null}" 
+                    Background="{x:Null}"
+                    Click="CardClick">
+                    <Image x:Name="CardImage5" Source="Assets/Stenden.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="145" Width="80" MinHeight="50" MinWidth="20"/>
+                </Button>
+
+            </Grid>
+            <!--ChanceMenu-->
+            <StackPanel x:Name="ChanceList" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,10,10,0" Visibility="Collapsed" >
+
+
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+
+
+            </StackPanel>
+            
+            <!-- Top Menu -->
+            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Margin="0,0,0,0" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Menu Button -->
+                    <Button Content="Menu" VerticalAlignment="Top"  Background="#FF007C16" Height="35" Width="105" Margin="10,13,0,2" Grid.Column="0" Grid.Row="0" Click="Button_Click" FontFamily="Calibri" FontSize="20">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="New Round" Click="NewRound_Click"/>
+                                <MenuFlyoutItem Text="Options" Click="ShowPopupOffsetClicked"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem Text="Quit" Click="Quit_Click"/>
+
+
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+
+                    <!-- HeaderText -->
+                    <TextBlock Text="Texas Hold'em" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Stencil" FontSize="48" />
+
+
+                </Grid>
+            </Grid>
+
+            <!-- Bottom Menu Grid -->
+            <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Margin="0,5,0,0" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="Assets/17177-200.png" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5"/>
+                    <TextBlock Text="2000" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Stencil" />
+                    <Button Content="Check" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CheckButton_Click" Foreground="White" Grid.Row="1" Grid.Column="0" FontFamily="Stencil" FontWeight="Bold" FontSize="25" />
+                    <Button Content="Fold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FoldButton_Click" Foreground="White" Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />
+
+                    <Button Content="Call" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CallButton_Click" Foreground="White" Grid.Row="1" Grid.Column="4" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />
+                    <Button Content="Raise" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="RaiseButton_Click" Foreground="White" Grid.Row="1" Grid.Column="5" FontWeight="Bold" FontFamily="Stencil" FontSize="25" />
+
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.ColumnSpan="5" Grid.RowSpan="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- P1 -->
+            <Grid x:Name="GridP1" Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlayerOneCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerOneCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerOneTextPlayer" Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
+                <TextBlock x:Name="PlayerOneTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+            </Grid>
+
+            <!-- P2 -->
+            <Grid x:Name="GridP2" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlayerTwoCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerTwoCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerTwoTextPlayer" Text="Player 2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
+                <TextBlock x:Name="PlayerTwoTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+            </Grid>
+
+            <!-- P3 -->
+            <Grid x:Name="GridP3" Grid.Column="3" Grid.Row="1" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlayerThreeCardImage1" Source="Assets/Stenden.png"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerThreeCardImage2" Source="Assets/Stenden.png"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerThreeTextPlayer" Text="Player 3" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
+                <TextBlock x:Name="PlayerThreeTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+            </Grid>
+
+            <!-- P4 -->
+            <Grid x:Name="GridP4" Grid.Column="1" Grid.Row="4" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlayerFourCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerFourCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerFourTextPlayer" Text="Player 4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
+                <TextBlock x:Name="PlayerFourTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+            </Grid>
+
+            <!-- P5 -->
+            <Grid x:Name="GridP5" Grid.Column="2" Grid.Row="4" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlayerFiveCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerFiveCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerFiveTextPlayer" Text="Player 5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
+                <TextBlock x:Name="PlayerFiveTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+            </Grid>
+
+            <!-- P6 -->
+            <Grid x:Name="GridP6" Grid.Column="3" Grid.Row="4" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlayerSixCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerSixCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <TextBlock x:Name="PlayerSixTextPlayer" Text="Player 6" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
+                <TextBlock x:Name="PlayerSixTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+            </Grid>
+        </Grid>
     </Grid>
 </Page>
+
+
