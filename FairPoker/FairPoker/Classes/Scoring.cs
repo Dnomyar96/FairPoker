@@ -14,6 +14,13 @@ namespace FairPoker.Classes
         /// </summary>
         public static Score GetScore(IEnumerable<Card> cards)
         {
+            if (ChanceCalculator.IsAlmostStraight(cards))
+            {
+            };
+            if (ChanceCalculator.IsAlmostFlush(cards))
+            {
+                
+            };
             if (IsRoyalFlush(cards))
                 return Score.RoyalFlush;
 
@@ -40,7 +47,7 @@ namespace FairPoker.Classes
 
             if (IsPair(cards))
                 return Score.Pair;
-
+           
             return Score.HighCard;
         }
 
