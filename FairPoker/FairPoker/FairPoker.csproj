@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AlmostCalculator.cs" />
     <Compile Include="Classes\Card.cs" />
     <Compile Include="Classes\ChanceCalculator.cs" />
     <Compile Include="Classes\Dealer.cs" />
