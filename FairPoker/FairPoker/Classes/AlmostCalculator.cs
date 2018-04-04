@@ -1,6 +1,7 @@
 ﻿using FairPoker.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,8 +85,13 @@ namespace FairPoker.Classes
                     previousCard = (int)card.Value;
                 }
             }
-            if (sequenceCount == 2 && alreadyMissingCard == true || sequenceCount == 3)
+            if (sequenceCount == 2 && alreadyMissingCard == true)
             {
+                return true;
+            }
+            else if (sequenceCount == 3)
+            {
+                Debug.WriteLine("TRUEEEE");
                 return true;
             }
             else
@@ -94,6 +100,11 @@ namespace FairPoker.Classes
             }
         }
 
+        /// <summary>
+        /// Method to check if a user has a change for royal flush
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <returns></returns>
         public static bool IsAlmostRoyalFlush(IEnumerable<Card> cards)
         {
             if (Scoring.IsFlush(cards))
@@ -106,7 +117,7 @@ namespace FairPoker.Classes
                         count++;
                     }
                 }
-                if(count >= 4)
+                if (count >= 4)
                 {
                     return true;
                 }

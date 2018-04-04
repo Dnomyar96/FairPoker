@@ -1,6 +1,7 @@
 ﻿using FairPoker.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,12 @@ namespace FairPoker.Classes
         /// </summary>
         public static Score GetScore(IEnumerable<Card> cards)
         {
+            if (AlmostCalculator.IsAlmostStraight(cards))
+            {
+                Debug.WriteLine("true");
+                ChanceCalculator.StraightChange(cards);
+            }
+
             if (IsRoyalFlush(cards))
                 return Score.RoyalFlush;
 
