@@ -48,54 +48,77 @@ namespace FairPoker.Classes
                 return false;
             }
         }
-    }
 
-    /// <summary>
-    /// Method to check if a user has a change for a straight.
-    /// </summary>
-    /// <param name="cards"></param>
-    /// <returns></returns>
-    public static bool IsAlmostStraight(IEnumerable<Card> cards)
-    {
-        List<Card> straightList = new List<Card>();
-        Debug.WriteLine("#########");
-        List<Card> sortedList = cards.OrderBy(o => o.Value).ToList();
-        Debug.WriteLine("number of cards: " + sortedList.Count());
-        int previousCard = 0;
-        int sequenceCount = 0;
-        bool alreadyMissingCard = false;
-        foreach (Card card in sortedList)
+        /// <summary>
+        /// Method to check if a user has a change for a straight.
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <returns></returns>
+        public static bool IsAlmostStraight(IEnumerable<Card> cards)
         {
-            Debug.WriteLine((int)card.Value);
-
-            if (previousCard == 0)
+            List<Card> straightList = new List<Card>();
+            List<Card> sortedList = cards.OrderBy(o => o.Value).ToList();
+            int previousCard = 0;
+            int sequenceCount = 0;
+            bool alreadyMissingCard = false;
+            foreach (Card card in sortedList)
             {
-                previousCard = (int)card.Value;
-            }
-            else
-            {
-                if ((int)card.Value - previousCard == 1)
+                if (previousCard == 0)
                 {
-                    sequenceCount++;
-                }
-                else if ((int)card.Value - previousCard == 2 && alreadyMissingCard == false)
-                {
-                    alreadyMissingCard = true;
+                    previousCard = (int)card.Value;
                 }
                 else
                 {
-                    sequenceCount = 0;
+                    if ((int)card.Value - previousCard == 1)
+                    {
+                        sequenceCount++;
+                    }
+                    else if ((int)card.Value - previousCard == 2 && alreadyMissingCard == false)
+                    {
+                        alreadyMissingCard = true;
+                    }
+                    else
+                    {
+                        sequenceCount = 0;
+                    }
+                    previousCard = (int)card.Value;
                 }
-                previousCard = (int)card.Value;
+            }
+            if (sequenceCount == 2 && alreadyMissingCard == true || sequenceCount == 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
-        if (sequenceCount == 2 && alreadyMissingCard == true || sequenceCount == 3)
+
+        public static bool IsAlmostRoyalFlush(IEnumerable<Card> cards)
         {
-            return true;
-        }
-        else
-        {
-            return false;
+            if (Scoring.IsFlush(cards))
+            {
+                int count = 0;
+                foreach (Card card in cards)
+                {
+                    if ((int)card.Value > 9)
+                    {
+                        count++;
+                    }
+                }
+                if(count >= 4)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
