@@ -7,6 +7,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
+using System.Threading;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,11 +25,14 @@ namespace FairPoker
 
         // Table Cards
         Deck Cards = new Deck();
+        List<Card> tableCards;
         private Card card1;
         private Card card2;
         private Card card3;
         private Card card4;
         private Card card5;
+
+     
 
         //Dealer and Players
         private Dealer dealer;
@@ -57,6 +62,8 @@ namespace FairPoker
             SetChance();
 
         }
+
+
 
         private void Quit_Click(object sender, RoutedEventArgs e) {
             Application.Current.Exit();
@@ -109,10 +116,9 @@ namespace FairPoker
 
             foreach(var player in players)
             {
-                player.NewRound();
+              player.NewRound();
             }
-
-            
+         
             DealCards();
             SetScores();
             SetChance();
@@ -241,9 +247,10 @@ namespace FairPoker
 
         private void SetScores()
         {
+           
             foreach (var player in players)
             {
-                player.CalculateScore(new List<Card>()
+              tableCards = new List<Card>()
                 {
               
                     card1,
@@ -251,9 +258,13 @@ namespace FairPoker
                     card3,
                     card4,
                     card5
-                }.Where(c => c != null).ToList());
-            }
+                }.Where(c => c != null).ToList();
 
+                Thread t = new Thread(() => player.CalculateScore(tableCards));
+                t.Start();
+
+               }
+            
           PlayerOneTextHand.Text = players[0].GetScore().ToString();
         
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
