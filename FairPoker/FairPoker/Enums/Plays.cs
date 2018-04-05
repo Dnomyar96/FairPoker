@@ -8,8 +8,7 @@ namespace FairPoker.Enums
 {
     public enum Plays
     {
-        Fold,
-        Check,
+        CheckOrFold,
         Call,
         Raise,
         AllIn

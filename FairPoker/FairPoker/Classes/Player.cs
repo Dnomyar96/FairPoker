@@ -10,6 +10,9 @@ namespace FairPoker.Classes
 {
     public class Player
     {
+        public bool UsesAI { get; set; }
+        public AIDecisionHandler AIDecisionHandler { get; set; }
+
         private List<Card> hand;
         private int cash;
         private Score score;
@@ -21,6 +24,7 @@ namespace FairPoker.Classes
             cash = 1000;
             score = Score.HighCard;
             state = PlayerState.NotPlayed;
+            AIDecisionHandler = new AIDecisionHandler(this);
         }
 
         /// <summary>
@@ -77,6 +81,7 @@ namespace FairPoker.Classes
         /// <summary>
         /// Player checks
         /// </summary>
+        /// <exception cref="PlayerFoldedException"/>
         public void Check()
         {
             if (state == PlayerState.Folded)
@@ -90,6 +95,7 @@ namespace FairPoker.Classes
         /// </summary>
         /// <param name="amount">The amount the player adds to the pot</param>
         /// <exception cref="NotEnoughCashException"/>
+        /// <exception cref="PlayerFoldedException"/>
         public void Call(int amount)
         {
             if (state == PlayerState.Folded)
@@ -107,6 +113,7 @@ namespace FairPoker.Classes
         /// </summary>
         /// <param name="amount">The amount the player adds to the pot</param>
         /// <exception cref="NotEnoughCashException"/>
+        /// <exception cref="PlayerFoldedException"/>
         public void Bet(int amount)
         {
             if (state == PlayerState.Folded)
@@ -124,6 +131,7 @@ namespace FairPoker.Classes
         /// </summary>
         /// <param name="amount">The amount the player adds to the pot</param>
         /// <exception cref="NotEnoughCashException"/>
+        /// <exception cref="PlayerFoldedException"/>
         public void Raise(int amount)
         {
             if (state == PlayerState.Folded)
@@ -134,6 +142,21 @@ namespace FairPoker.Classes
 
             cash -= amount;
             state = PlayerState.Raised;
+        }
+
+        /// <summary>
+        /// Player raises. Returns amount that is bet this way.
+        /// </summary>
+        /// <exception cref="PlayerFoldedException"/>
+        public int AllIn()
+        {
+            if (state == PlayerState.Folded)
+                throw new PlayerFoldedException();
+
+            var amountBet = cash;
+            cash = 0;
+            state = PlayerState.Raised;
+            return amountBet;
         }
 
         /// <summary>
