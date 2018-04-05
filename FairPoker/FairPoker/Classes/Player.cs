@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 
 namespace FairPoker.Classes
 {
@@ -15,8 +14,7 @@ namespace FairPoker.Classes
         private int cash;
         private Score score;
         private PlayerState state;
-        Thread calcThread;
-        
+
         public Player()
         {
             hand = new List<Card>();
@@ -25,7 +23,6 @@ namespace FairPoker.Classes
             state = PlayerState.NotPlayed;
         }
 
-      
         /// <summary>
         /// Reset the state for a player to start a new round.
         /// </summary>
