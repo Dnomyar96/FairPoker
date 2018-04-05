@@ -296,6 +296,47 @@ namespace FairPoker
                 {
                     StraightChance.Text = straightChance.ToString("Straight: 0.##");
                 }
+                var pairChance = ChanceCalculator.PairChance(cards);
+                if(pairChance > 0)
+                {
+                    PairChance.Text = pairChance.ToString("Pair: 0.##");
+                }
+                var twoPairChance = ChanceCalculator.TwoPairChance(cards);
+                if (twoPairChance > 0)
+                {
+                    TwoPairChance.Text = twoPairChance.ToString("Two Pair: 0.##");
+                }
+                var threeOfAKindChance = ChanceCalculator.ThreeOfAKindChance(cards);
+                if (threeOfAKindChance > 0)
+                {
+                    ThreeOfAKindChance.Text = threeOfAKindChance.ToString("Three of a kind: 0.##");
+                }
+                var flushChance = ChanceCalculator.FlushChance(cards);
+                if (flushChance > 0)
+                {
+                    FlushChance.Text = flushChance.ToString("Flush: 0.##");
+                }
+                var fullHouseChance = ChanceCalculator.FullHouseChance(cards);
+                if (fullHouseChance > 0)
+                {
+                    FullHouseChance.Text = fullHouseChance.ToString("Full House: 0.##");
+                }
+
+                var fourOfAKindChance = ChanceCalculator.FourOfAKindChance(cards);
+                if (fourOfAKindChance > 0)
+                {
+                   FourOfKindChance.Text = fourOfAKindChance.ToString("Four of a kind: 0.##");
+                }
+                var straightFlushChance = ChanceCalculator.StraightFlushChance(cards);
+                if (straightFlushChance > 0)
+                {
+                   StraightFlushChance.Text = straightFlushChance.ToString("Straight flush: 0.##");
+                }
+                var royalFlushChance = ChanceCalculator.RoyalFlushChance(cards);
+                if (royalFlushChance > 0)
+                {
+                    RoyalFlushChance.Text = royalFlushChance.ToString("Straight flush: 0.##");
+                }
             }
         }
 
@@ -320,7 +361,7 @@ namespace FairPoker
 
         private async void TurnCard()
         {
-
+        
             if (gameState == RoundState.PreFlop)
             {
                 gameState = RoundState.Flop;
@@ -424,13 +465,10 @@ namespace FairPoker
 
         }
 
-
         // Handles the Click event on the Button on the page and opens the Popup. 
         private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
         {
-   
                 this.Frame.Navigate(typeof(OptionsPage));
-           
         }
     }
 }

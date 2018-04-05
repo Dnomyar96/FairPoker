@@ -118,15 +118,15 @@
             </Grid>
             <!--ChanceMenu-->
             <StackPanel x:Name="ChanceList" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,10,10,0" Visibility="Collapsed" >
-                <TextBlock x:Name="PairChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="TwoPairChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="ThreeOfAKindChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="StraightChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="FlushChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="FullHouseChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="FourOfKindChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="StraightFlushChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
-                <TextBlock x:Name="RoyalFlushChance" Text="Placeholder 100%" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="PairChance"          Text="Pair chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="TwoPairChance"       Text="Two pair chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="ThreeOfAKindChance"  Text="Three of a kind chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="StraightChance"      Text="Straight chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="FlushChance"         Text="Flush chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="FullHouseChance"     Text="Full House chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="FourOfKindChance"    Text="Four of a kind chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="StraightFlushChance" Text="Straight flush chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
+                <TextBlock x:Name="RoyalFlushChance"    Text="Royal flush chance not available" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="5" Grid.Row="0" FontFamily="Calibri" FontSize="20" Foreground="White" />
             </StackPanel>
             
             <!-- Top Menu -->

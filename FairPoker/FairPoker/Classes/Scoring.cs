@@ -178,6 +178,7 @@ namespace FairPoker.Classes
             if (sets.Where(s => s.Count() > 1).Count() > 1)
                 return true;
 
+
             return false;
         }
 

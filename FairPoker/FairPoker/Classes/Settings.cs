@@ -19,7 +19,7 @@ namespace FairPoker.Classes
         {
             PlayerCount = 4;
             HideOtherPlayersCards = true;
-            HideChances = true;
+            HideChances = false;
             SoundEffects = true;
         }
     }

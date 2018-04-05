@@ -35,6 +35,11 @@ namespace FairPoker.Classes
             cardsInDeck = cards;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <returns></returns>
         public static double PairChance(IEnumerable<Card> cards)
         {
             if (!Scoring.IsPair(cards))
@@ -51,19 +56,46 @@ namespace FairPoker.Classes
             }
         }
 
-        public static double CardChance(int count, IEnumerable<Card> cards)
+        public static double TwoPairChance(IEnumerable<Card> cards)
         {
-            var knownCardCount = Convert.ToDouble(cards.Count());
-            var unknownCardCount = Convert.ToDouble(cardsInDeck.Count() - knownCardCount);
-            Debug.WriteLine(unknownCardCount);
-            Debug.WriteLine(count / unknownCardCount * 100);
-            return count / unknownCardCount * 100;
+            if (Scoring.IsTwoPair(cards))
+            {
+                return 100;
+            }
+            if (Scoring.IsPair(cards))
+            {
+                var TwoPairChances = cards.Count() - 2;
+                return CardChance(TwoPairChances  * 3,cards);
+            }
+            else
+            {
+                return 0;
+            }
         }
 
+        public static double ThreeOfAKindChance(IEnumerable<Card> cards)
+        {
+            if(Scoring.IsThreeOfKind(cards)){
+                return 100;
+            }
+
+            if (Scoring.IsTwoPair(cards))
+            {
+                return 0;
+            }
+            if (Scoring.IsPair(cards))
+            {
+                return CardChance(2, cards);
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public static double StraightChance(IEnumerable<Card> cards)
         {
-            if(AlmostCalculator.IsAlmostStraight(cards, out int possibleCount))
+            if (AlmostCalculator.IsAlmostStraight(cards, out int possibleCount))
             {
                 var sortedList = cards.OrderBy(o => o.Value).ToList();
                 var possibleList = new List<Card>();
@@ -101,18 +133,88 @@ namespace FairPoker.Classes
                 }
                 else
                 {
-                   return CardChance(8, cards);
+                    return CardChance(8, cards);
                 }
             }
             else
             {
                 return 0;
             }
-            
+
         }
-        public static void FlushChange(IEnumerable<Card> cards)
+
+        public static double FlushChance(IEnumerable<Card> cards)
         {
-                CardChance(9, cards);
+            if (Scoring.IsFlush(cards))
+            {
+                return 100;
+            }
+            if (AlmostCalculator.IsAlmostFlush(cards))
+            {
+                return CardChance(9, cards);
+            }
+            return 0;
+        }
+
+        public static double CardChance(int count, IEnumerable<Card> cards)
+        {
+            var knownCardCount = Convert.ToDouble(cards.Count());
+            var unknownCardCount = Convert.ToDouble(cardsInDeck.Count() - knownCardCount);
+            Debug.WriteLine(unknownCardCount);
+            Debug.WriteLine(count / unknownCardCount * 100);
+            return count / unknownCardCount * 100;
+        } 
+
+        public static double FullHouseChance(IEnumerable<Card> cards)
+        {
+            if (Scoring.IsFullHouse(cards))
+            {
+                return 100;
+            }
+            if (Scoring.IsTwoPair(cards))
+            {
+                return CardChance(4, cards);
+            }
+            if (Scoring.IsThreeOfKind(cards))
+            {
+                var possibleCards = cards.Count() - 3;
+                return CardChance(possibleCards * 3, cards);
+            }
+            return 0;
+        }
+
+        public static double FourOfAKindChance(IEnumerable<Card> cards)
+        {
+            if (Scoring.IsFourOfKind(cards))
+            {
+                return 100;
+            }
+            if (Scoring.IsThreeOfKind(cards))
+            {
+                return CardChance(1, cards);
+            }
+            return 0;
+        }
+        
+        public static double StraightFlushChance(IEnumerable<Card> cards)
+        {
+            if(AlmostCalculator.IsAlmostStraightFlush(cards,out int possibleCount))
+            {
+                return CardChance(possibleCount,cards);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static double RoyalFlushChance(IEnumerable<Card> cards)
+        {
+            if (AlmostCalculator.IsAlmostRoyalFlush(cards))
+            {
+                return CardChance(1, cards);
+            }
+            return 0;
         }
     }
 }
