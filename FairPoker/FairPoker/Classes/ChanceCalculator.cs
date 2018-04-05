@@ -51,56 +51,68 @@ namespace FairPoker.Classes
             }
         }
 
-        public static double CardChange(int count, IEnumerable<Card> cards)
+        public static double CardChance(int count, IEnumerable<Card> cards)
         {
             var knownCardCount = Convert.ToDouble(cards.Count());
             var unknownCardCount = Convert.ToDouble(cardsInDeck.Count() - knownCardCount);
             Debug.WriteLine(unknownCardCount);
             Debug.WriteLine(count / unknownCardCount * 100);
             return count / unknownCardCount * 100;
-
         }
 
-        public static void StraightChange(IEnumerable<Card> cards)
+
+        public static double StraightChance(IEnumerable<Card> cards)
         {
-            var sortedList = cards.OrderBy(o => o.Value).ToList();
-            var possibleList = new List<Card>();
-            var straightList = new List<Card>();
-            var previousCard = 0;
-            var missingCard = new Card();
-            bool alreadyMissingCard = false;
-            foreach (Card card in sortedList)
+            if(AlmostCalculator.IsAlmostStraight(cards, out int possibleCount))
             {
-                if (previousCard == 0)
+                var sortedList = cards.OrderBy(o => o.Value).ToList();
+                var possibleList = new List<Card>();
+                var straightList = new List<Card>();
+                var previousCard = 0;
+                var missingCard = new Card();
+                bool alreadyMissingCard = false;
+                foreach (Card card in sortedList)
                 {
-                    previousCard = (int)card.Value;
-                }
-                else
-                {
-                    if ((int)card.Value - previousCard == 1)
+                    if (previousCard == 0)
                     {
-                        straightList.Add(card);
-                    }
-                    else if ((int)card.Value - previousCard == 2 && alreadyMissingCard == false)
-                    {
-                        alreadyMissingCard = true;
-                        missingCard = card;
+                        previousCard = (int)card.Value;
                     }
                     else
                     {
-                        straightList = new List<Card>();
+                        if ((int)card.Value - previousCard == 1)
+                        {
+                            straightList.Add(card);
+                        }
+                        else if ((int)card.Value - previousCard == 2 && !alreadyMissingCard)
+                        {
+                            alreadyMissingCard = true;
+                            missingCard = card;
+                        }
+                        else
+                        {
+                            straightList = new List<Card>();
+                        }
+                        previousCard = (int)card.Value;
                     }
-                    previousCard = (int)card.Value;
                 }
-            }
-            if(alreadyMissingCard == true)
-            {
-                CardChange(4,cards);
+                if (alreadyMissingCard == true)
+                {
+                    return CardChance(4, cards);
+                }
+                else
+                {
+                   return CardChance(8, cards);
+                }
             }
             else
             {
-                CardChange(8, cards);
+                return 0;
             }
+            
+        }
+        public static void FlushChange(IEnumerable<Card> cards)
+        {
+                CardChance(9, cards);
         }
     }
 }

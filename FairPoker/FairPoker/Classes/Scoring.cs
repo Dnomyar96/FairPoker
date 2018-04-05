@@ -15,12 +15,6 @@ namespace FairPoker.Classes
         /// </summary>
         public static Score GetScore(IEnumerable<Card> cards)
         {
-            if (AlmostCalculator.IsAlmostStraight(cards))
-            {
-                Debug.WriteLine("true");
-                ChanceCalculator.StraightChange(cards);
-            }
-
             if (IsRoyalFlush(cards))
                 return Score.RoyalFlush;
 

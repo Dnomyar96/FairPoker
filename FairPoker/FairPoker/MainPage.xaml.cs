@@ -53,7 +53,8 @@ namespace FairPoker
                 players.Add(new Player());
             }           
             DealCards();
-            SetScores();       
+            SetScores();
+            SetChance();
 
         }
 
@@ -114,6 +115,7 @@ namespace FairPoker
             
             DealCards();
             SetScores();
+            SetChance();
         }
 
         private void SetDefaultValues()
@@ -123,7 +125,7 @@ namespace FairPoker
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-
+      
             PlayerOneCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerOneTextHand.Text = "";
@@ -224,6 +226,7 @@ namespace FairPoker
                     }
                 }
                 SetScores();
+                SetChance();
                 }
             }
 
@@ -233,6 +236,7 @@ namespace FairPoker
         {
             TurnCard();
             SetScores();
+            SetChance();
         }
 
         private void SetScores()
@@ -241,6 +245,7 @@ namespace FairPoker
             {
                 player.CalculateScore(new List<Card>()
                 {
+              
                     card1,
                     card2,
                     card3,
@@ -273,6 +278,27 @@ namespace FairPoker
             }
         }
 
+        private void SetChance()
+        {
+            var player = players.FirstOrDefault();
+            var cards = player.GetCards().Concat(new List<Card>()
+                {
+                    card1,
+                    card2,
+                    card3,
+                    card4,
+                    card5
+                }.Where(c => c != null));
+            if(cards.Count() < 7)
+            {
+                var straightChance = ChanceCalculator.StraightChance(cards);
+                if (straightChance > 0)
+                {
+                    StraightChance.Text = straightChance.ToString("Straight: 0.##");
+                }
+            }
+        }
+
        private async void CardAudio()
         {
             Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
@@ -294,7 +320,6 @@ namespace FairPoker
 
         private async void TurnCard()
         {
-        
 
             if (gameState == RoundState.PreFlop)
             {
