@@ -1,6 +1,7 @@
 ﻿using FairPoker.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,37 +17,14 @@ namespace FairPoker.Classes
         /// <returns></returns>
         public static bool IsAlmostFlush(IEnumerable<Card> cards)
         {
-            int countSpades = 0;
-            int countHearts = 0;
-            int countDiamonds = 0;
-            int countClovers = 0;
-            foreach (Card card in cards)
-            {
-                if (card.Color == CardColor.Hearts)
-                {
-                    countHearts++;
-                }
-                if (card.Color == CardColor.Spades)
-                {
-                    countSpades++;
-                }
-                if (card.Color == CardColor.Clovers)
-                {
-                    countClovers++;
-                }
-                if (card.Color == CardColor.Diamonds)
-                {
-                    countDiamonds++;
-                }
-            }
-            if (countClovers >= 4 || countDiamonds >= 4 || countHearts >= 4 || countSpades >= 4)
+            var groupedCards = cards.GroupBy(c => c.Color);
+
+            if(groupedCards.Any(c => c.Count() == 4))
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -54,11 +32,12 @@ namespace FairPoker.Classes
         /// </summary>
         /// <param name="cards"></param>
         /// <returns></returns>
-        public static bool IsAlmostStraight(IEnumerable<Card> cards)
+        public static bool IsAlmostStraight(IEnumerable<Card> cards, out int possibleCount)
         {
             List<Card> straightList = new List<Card>();
             List<Card> sortedList = cards.OrderBy(o => o.Value).ToList();
             int previousCard = 0;
+            possibleCount = 0;
             int sequenceCount = 0;
             bool alreadyMissingCard = false;
             foreach (Card card in sortedList)
@@ -73,7 +52,7 @@ namespace FairPoker.Classes
                     {
                         sequenceCount++;
                     }
-                    else if ((int)card.Value - previousCard == 2 && alreadyMissingCard == false)
+                    else if ((int)card.Value - previousCard == 2 && !alreadyMissingCard)
                     {
                         alreadyMissingCard = true;
                     }
@@ -84,8 +63,14 @@ namespace FairPoker.Classes
                     previousCard = (int)card.Value;
                 }
             }
-            if (sequenceCount == 2 && alreadyMissingCard == true || sequenceCount == 3)
+            if (sequenceCount == 2 && alreadyMissingCard)
             {
+                possibleCount = 4;
+                return true;
+            }
+            else if (sequenceCount == 3)
+            {
+                possibleCount = 8;
                 return true;
             }
             else
@@ -94,6 +79,11 @@ namespace FairPoker.Classes
             }
         }
 
+        /// <summary>
+        /// Method to check if a user has a change for royal flush
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <returns></returns>
         public static bool IsAlmostRoyalFlush(IEnumerable<Card> cards)
         {
             if (Scoring.IsFlush(cards))
@@ -106,7 +96,7 @@ namespace FairPoker.Classes
                         count++;
                     }
                 }
-                if(count >= 4)
+                if (count >= 4)
                 {
                     return true;
                 }
