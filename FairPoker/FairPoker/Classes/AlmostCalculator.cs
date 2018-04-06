@@ -80,35 +80,94 @@ namespace FairPoker.Classes
         }
 
         /// <summary>
-        /// Method to check if a user has a change for royal flush
+        /// Method to check if a user has a change for a straight.
         /// </summary>
         /// <param name="cards"></param>
         /// <returns></returns>
-        public static bool IsAlmostRoyalFlush(IEnumerable<Card> cards)
+        public static bool IsAlmostStraightFlush(IEnumerable<Card> cards, out int possibleCount)
         {
-            if (Scoring.IsFlush(cards))
+            List<Card> straightList = new List<Card>();
+            List<Card> sortedList = cards.OrderBy(o => o.Value).ToList();
+            var previousCard = new Card();
+            possibleCount = 0;
+            int sequenceCount = 0;
+            bool alreadyMissingCard = false;
+            foreach (Card card in sortedList)
             {
-                int count = 0;
-                foreach (Card card in cards)
+                if ((int)previousCard.Value == 0)
                 {
-                    if ((int)card.Value > 9)
-                    {
-                        count++;
-                    }
-                }
-                if (count >= 4)
-                {
-                    return true;
+                    previousCard = card;
                 }
                 else
                 {
-                    return false;
+                    if ((int)card.Value - (int)previousCard.Value == 1)
+                    {
+                        if (card.Color.Equals(previousCard.Color))
+                        {
+                            sequenceCount++;
+                        }
+                        
+                    }
+                    else if ((int)card.Value - (int)previousCard.Value == 2 && !alreadyMissingCard)
+                    {
+                        if (card.Color.Equals(previousCard.Color))
+                        {
+                            alreadyMissingCard = true;
+                        }
+                    }
+                    else
+                    {
+                        sequenceCount = 0;
+                    }
+                    previousCard = card;
                 }
+            }
+            if (sequenceCount == 2 && alreadyMissingCard)
+            {
+                possibleCount = 1;
+                return true;
+            }
+            else if (sequenceCount == 3)
+            {
+                possibleCount = 2;
+                return true;
             }
             else
             {
                 return false;
             }
         }
+
+    /// <summary>
+    /// Method to check if a user has a change for royal flush
+    /// </summary>
+    /// <param name="cards"></param>
+    /// <returns></returns>
+    public static bool IsAlmostRoyalFlush(IEnumerable<Card> cards)
+    {
+        if (Scoring.IsFlush(cards))
+        {
+            int count = 0;
+            foreach (Card card in cards)
+            {
+                if ((int)card.Value > 9)
+                {
+                    count++;
+                }
+            }
+            if (count >= 4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
+}
 }

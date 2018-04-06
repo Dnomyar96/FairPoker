@@ -7,8 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
-using System.Threading;
-
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -26,14 +24,11 @@ namespace FairPoker
 
         // Table Cards
         Deck Cards = new Deck();
-        List<Card> tableCards;
         private Card card1;
         private Card card2;
         private Card card3;
         private Card card4;
         private Card card5;
-
-     
 
         //Dealer and Players
         private Dealer dealer;
@@ -45,28 +40,32 @@ namespace FairPoker
 
         public MainPage()
         {
-         
+
             this.InitializeComponent();
             Audio = new MediaPlayer();
             /// Required Set After Initialisation
             SetDefaultValues();
 
             dealer = new Dealer();
-            players = new List<Player>();          
+            players = new List<Player>();
 
             for (var i = 0; i < playerCount; i++)
             {
-                players.Add(new Player());
-            }           
+                var player = new Player();
+
+                if (i > 0)
+                    player.UsesAI = true;
+
+                players.Add(player);
+            }
             DealCards();
             SetScores();
             SetChance();
-
+            DoAIMoves();
         }
 
-
-
-        private void Quit_Click(object sender, RoutedEventArgs e) {
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
             Application.Current.Exit();
         }
 
@@ -95,7 +94,7 @@ namespace FairPoker
         {
 
         }
-              
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -115,14 +114,16 @@ namespace FairPoker
             SetDefaultValues();
             dealer.NewRound();
 
-            foreach(var player in players)
+            foreach (var player in players)
             {
-              player.NewRound();
+                player.NewRound();
             }
-         
+
+
             DealCards();
             SetScores();
             SetChance();
+            DoAIMoves();
         }
 
         private void SetDefaultValues()
@@ -132,7 +133,7 @@ namespace FairPoker
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-      
+
             PlayerOneCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             PlayerOneTextHand.Text = "";
@@ -234,40 +235,37 @@ namespace FairPoker
                 }
                 SetScores();
                 SetChance();
-                }
+                DoAIMoves();
             }
+        }
 
- 
+
 
         private void CardClick(object sender, RoutedEventArgs e)
         {
             TurnCard();
             SetScores();
             SetChance();
+            DoAIMoves();
         }
 
         private void SetScores()
         {
-           
             foreach (var player in players)
             {
-              tableCards = new List<Card>()
+                player.CalculateScore(new List<Card>()
                 {
-              
+
                     card1,
                     card2,
                     card3,
                     card4,
                     card5
-                }.Where(c => c != null).ToList();
+                }.Where(c => c != null).ToList());
+            }
 
-                Thread t = new Thread(() => player.CalculateScore(tableCards));
-                t.Start();
+            PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
-               }
-            
-          PlayerOneTextHand.Text = players[0].GetScore().ToString();
-        
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerTwoTextHand.Text = players[1].GetScore().ToString();
@@ -301,17 +299,66 @@ namespace FairPoker
                     card4,
                     card5
                 }.Where(c => c != null));
-            if(cards.Count() < 7)
+            if (cards.Count() < 7)
             {
                 var straightChance = ChanceCalculator.StraightChance(cards);
                 if (straightChance > 0)
                 {
                     StraightChance.Text = straightChance.ToString("Straight: 0.##");
                 }
+                var pairChance = ChanceCalculator.PairChance(cards);
+                if (pairChance > 0)
+                {
+                    PairChance.Text = pairChance.ToString("Pair: 0.##");
+                }
+                var twoPairChance = ChanceCalculator.TwoPairChance(cards);
+                if (twoPairChance > 0)
+                {
+                    TwoPairChance.Text = twoPairChance.ToString("Two Pair: 0.##");
+                }
+                var threeOfAKindChance = ChanceCalculator.ThreeOfAKindChance(cards);
+                if (threeOfAKindChance > 0)
+                {
+                    ThreeOfAKindChance.Text = threeOfAKindChance.ToString("Three of a kind: 0.##");
+                }
+                var flushChance = ChanceCalculator.FlushChance(cards);
+                if (flushChance > 0)
+                {
+                    FlushChance.Text = flushChance.ToString("Flush: 0.##");
+                }
+                var fullHouseChance = ChanceCalculator.FullHouseChance(cards);
+                if (fullHouseChance > 0)
+                {
+                    FullHouseChance.Text = fullHouseChance.ToString("Full House: 0.##");
+                }
+
+                var fourOfAKindChance = ChanceCalculator.FourOfAKindChance(cards);
+                if (fourOfAKindChance > 0)
+                {
+                    FourOfKindChance.Text = fourOfAKindChance.ToString("Four of a kind: 0.##");
+                }
+                var straightFlushChance = ChanceCalculator.StraightFlushChance(cards);
+                if (straightFlushChance > 0)
+                {
+                    StraightFlushChance.Text = straightFlushChance.ToString("Straight flush: 0.##");
+                }
+                var royalFlushChance = ChanceCalculator.RoyalFlushChance(cards);
+                if (royalFlushChance > 0)
+                {
+                    RoyalFlushChance.Text = royalFlushChance.ToString("Straight flush: 0.##");
+                }
             }
         }
 
-       private async void CardAudio()
+        private void DoAIMoves()
+        {
+            foreach(var player in players.Where(p => p.UsesAI))
+            {
+                var play = player.AIDecisionHandler.MakeDecision();
+            }
+        }
+
+        private async void CardAudio()
         {
             Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
             Windows.Storage.StorageFile file = await folder.GetFileAsync(@"card.wav");
@@ -382,11 +429,11 @@ namespace FairPoker
         }
 
         private void ShowAllCards()
-        {            
+        {
             if (playerCount > 1)
             {
                 var playerTwoCards = players[1].GetCards().ToArray();
-                GridP2.Visibility = Visibility.Visible;            
+                GridP2.Visibility = Visibility.Visible;
                 PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
                 PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
                 PlayerTwoTextHand.Text = players[1].GetScore().ToString();
@@ -405,7 +452,7 @@ namespace FairPoker
             if (playerCount > 3)
             {
                 var playerFourCards = players[3].GetCards().ToArray();
-                GridP4.Visibility = Visibility.Visible;               
+                GridP4.Visibility = Visibility.Visible;
                 PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
                 PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
                 PlayerFourTextHand.Text = players[3].GetScore().ToString();
@@ -429,20 +476,17 @@ namespace FairPoker
                 PlayerSixTextHand.Text = players[5].GetScore().ToString();
             }
         }
-    
+
 
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-
         // Handles the Click event on the Button on the page and opens the Popup. 
         private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
         {
-   
-                this.Frame.Navigate(typeof(OptionsPage));
-           
+            this.Frame.Navigate(typeof(OptionsPage));
         }
     }
 }
