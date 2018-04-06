@@ -224,7 +224,7 @@ namespace FairPoker
             {
                 var playerTwoCards = players[1].GetCards().ToArray();
                 var playerTwoBetting = players[1].bettingCash.ToString();
-                var playerTwoStatus = players[1].state.ToString();
+                var playerTwoStatus = players[1].GetPlayerState().ToString();
 
                 GridP2.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
@@ -240,7 +240,7 @@ namespace FairPoker
             {
                 var playerThreeCards = players[2].GetCards().ToArray();
                 var playerThreeBetting = players[2].bettingCash.ToString();
-                var playerThreeStatus = players[2].state.ToString();
+                var playerThreeStatus = players[2].GetPlayerState().ToString();
 
                 GridP3.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
@@ -256,7 +256,7 @@ namespace FairPoker
             {
                 var playerFourCards = players[3].GetCards().ToArray();
                 var playerFourBetting = players[3].bettingCash.ToString();
-                var playerFourStatus = players[3].state.ToString();
+                var playerFourStatus = players[3].GetPlayerState().ToString();
 
                 GridP4.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
@@ -273,7 +273,7 @@ namespace FairPoker
    
                 var playerFiveCards = players[4].GetCards().ToArray();
                 var playerFiveBetting = players[4].bettingCash.ToString();
-                var playerFiveStatus = players[4].state.ToString();
+                var playerFiveStatus = players[4].GetPlayerState().ToString();
 
                 GridP5.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
@@ -290,7 +290,7 @@ namespace FairPoker
                 
                     var playerSixCards = players[5].GetCards().ToArray();
                     var playerSixBetting = players[5].bettingCash.ToString();
-                    var playerSixStatus = players[5].state.ToString();
+                    var playerSixStatus = players[5].GetPlayerState().ToString();
 
                     GridP6.Visibility = Visibility.Visible;
                     if (Settings.HideOtherPlayersCards == false)
@@ -333,7 +333,7 @@ namespace FairPoker
                     card4,
                     card5
                 }.Where(c => c != null).ToList();
-            }
+            
 
             foreach (Player player in players)
             {

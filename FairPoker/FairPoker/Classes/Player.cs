@@ -31,13 +31,6 @@ namespace FairPoker.Classes
             AIDecisionHandler = new AIDecisionHandler(this);
         }
 
-        public void Turn()
-        {
-            
-            AIDecisionHandler.MakeDecision();
-
-        }
-
         /// <summary>
         /// Reset the state for a player to start a new round.
         /// </summary>
@@ -187,6 +180,10 @@ namespace FairPoker.Classes
         public int GetPlayerBet()
         {
             return bet;
+        }
+        public PlayerState GetPlayerStatus()
+        {
+            return state;
         }
 
         public async Task Turn()
