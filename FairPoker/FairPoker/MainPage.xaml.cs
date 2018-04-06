@@ -129,6 +129,8 @@ namespace FairPoker
 
         private void NewRound_Click(object sender, RoutedEventArgs e)
         {
+            ResetChanceLabels();
+
             card1 = null;
             card2 = null;
             card3 = null;
@@ -137,7 +139,7 @@ namespace FairPoker
 
             gameState = RoundState.PreFlop;
 
-            SetDefaultValues();
+            SetDefaultValues();          
             dealer.NewRound();
 
             foreach (var player in players)
@@ -150,6 +152,19 @@ namespace FairPoker
             SetScores();
             SetChance();
             DoAIMoves();
+        }
+
+        private void ResetChanceLabels()
+        {
+            PairChance.Text = "Pair chance not available";
+            TwoPairChance.Text = "Two pair chance not available";
+            ThreeOfAKindChance.Text = "Three of a kind chance not available";
+            StraightChance.Text = "Straight chance not available";
+            FlushChance.Text = "Flush chance not available";
+            FullHouseChance.Text = "Full House chance not available";
+            FourOfKindChance.Text = "Four of a kind chance not available";
+            StraightFlushChance.Text = "Straight flush chance not available";
+            RoyalFlushChance.Text = "Royal flush chance not available";
         }
 
         private void SetDefaultValues()
@@ -279,6 +294,9 @@ namespace FairPoker
 
         private void SetScores()
         {
+
+       
+
             tableCards = new List<Card>()
                 {
 
@@ -289,11 +307,14 @@ namespace FairPoker
                     card5
                 }.Where(c => c != null).ToList();
 
-            foreach (var player in players)
+            foreach (Player player in players)
             {
                 Task t = new Task(() => player.CalculateScore(tableCards));
                 t.Start();
             }
+                player.CalculateScore(tableCards);
+            }
+
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
@@ -334,48 +355,48 @@ namespace FairPoker
                 var straightChance = ChanceCalculator.StraightChance(cards);
                 if (straightChance > 0)
                 {
-                    StraightChance.Text = straightChance.ToString("Straight: 0.##");
+                    StraightChance.Text = straightChance.ToString("Straight: 0.##") + "%";
                 }
                 var pairChance = ChanceCalculator.PairChance(cards);
                 if (pairChance > 0)
                 {
-                    PairChance.Text = pairChance.ToString("Pair: 0.##");
+                    PairChance.Text = pairChance.ToString("Pair: 0.##") + "%";
                 }
                 var twoPairChance = ChanceCalculator.TwoPairChance(cards);
                 if (twoPairChance > 0)
                 {
-                    TwoPairChance.Text = twoPairChance.ToString("Two Pair: 0.##");
+                    TwoPairChance.Text = twoPairChance.ToString("Two Pair: 0.##") + "%";
                 }
                 var threeOfAKindChance = ChanceCalculator.ThreeOfAKindChance(cards);
                 if (threeOfAKindChance > 0)
                 {
-                    ThreeOfAKindChance.Text = threeOfAKindChance.ToString("Three of a kind: 0.##");
+                    ThreeOfAKindChance.Text = threeOfAKindChance.ToString("Three of a kind: 0.##") + "%";
                 }
                 var flushChance = ChanceCalculator.FlushChance(cards);
                 if (flushChance > 0)
                 {
-                    FlushChance.Text = flushChance.ToString("Flush: 0.##");
+                    FlushChance.Text = flushChance.ToString("Flush: 0.##") + "%";
                 }
                 var fullHouseChance = ChanceCalculator.FullHouseChance(cards);
                 if (fullHouseChance > 0)
                 {
-                    FullHouseChance.Text = fullHouseChance.ToString("Full House: 0.##");
+                    FullHouseChance.Text = fullHouseChance.ToString("Full House: 0.##") + "%";
                 }
 
                 var fourOfAKindChance = ChanceCalculator.FourOfAKindChance(cards);
                 if (fourOfAKindChance > 0)
                 {
-                    FourOfKindChance.Text = fourOfAKindChance.ToString("Four of a kind: 0.##");
+                    FourOfKindChance.Text = fourOfAKindChance.ToString("Four of a kind: 0.##") + "%";
                 }
                 var straightFlushChance = ChanceCalculator.StraightFlushChance(cards);
                 if (straightFlushChance > 0)
                 {
-                    StraightFlushChance.Text = straightFlushChance.ToString("Straight flush: 0.##");
+                    StraightFlushChance.Text = straightFlushChance.ToString("Straight flush: 0.##") + "%";
                 }
                 var royalFlushChance = ChanceCalculator.RoyalFlushChance(cards);
                 if (royalFlushChance > 0)
                 {
-                    RoyalFlushChance.Text = royalFlushChance.ToString("Straight flush: 0.##");
+                    RoyalFlushChance.Text = royalFlushChance.ToString("Royal flush: 0.##") + "%";
                 }
             }
         }
