@@ -619,7 +619,6 @@ namespace FairPoker
             SetScores();
             SetChance();
             Play();
-            DoAIMoves();
         }
     }
 }
