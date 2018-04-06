@@ -2,6 +2,7 @@
 using FairPoker.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -171,9 +172,16 @@ namespace FairPoker.Classes
             state = PlayerState.Folded;
         }
 
+<<<<<<< HEAD
         public int GetPlayerBet()
         {
             return bet;
+=======
+        public async Task Turn()
+        {
+            AIDecisionHandler aIDecisionHandler = new AIDecisionHandler(this);
+            Debug.WriteLine(AIDecisionHandler.MakeDecision());
+>>>>>>> 83eb79a50cd40adc66815553d39e83e93a55ae3f
         }
     }
 }
