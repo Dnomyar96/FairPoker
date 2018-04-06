@@ -147,7 +147,6 @@ namespace FairPoker
                 player.NewRound();
             }
 
-
             DealCards();
             SetScores();
             SetChance();
@@ -276,7 +275,7 @@ namespace FairPoker
                 }
                 SetScores();
                 SetChance();
-                play();
+                Play();
                 DoAIMoves();
             }
         }
@@ -288,15 +287,12 @@ namespace FairPoker
             TurnCard();
             SetScores();
             SetChance();
-            play();
+            Play();
             DoAIMoves();
         }
 
         private void SetScores()
         {
-
-       
-
             tableCards = new List<Card>()
                 {
 
@@ -400,7 +396,7 @@ namespace FairPoker
             }
         }
 
-        public async void play()
+        public async void Play()
         {
             foreach(var player in players)
             {
