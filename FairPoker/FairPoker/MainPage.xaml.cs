@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -237,6 +238,7 @@ namespace FairPoker
                 }
                 SetScores();
                 SetChance();
+                PlayAsync();
                 DoAIMoves();
             }
         }
@@ -248,6 +250,7 @@ namespace FairPoker
             TurnCard();
             SetScores();
             SetChance();
+            PlayAsync();
             DoAIMoves();
         }
 
@@ -262,12 +265,7 @@ namespace FairPoker
                     card4,
                     card5
                 }.Where(c => c != null).ToList();
-
-            foreach (var player in players)
-            {
-                //Thread t = new Thread(() => player.CalculateScore(tableCards));
-                //t.Start();
-            }
+ 
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
@@ -354,8 +352,22 @@ namespace FairPoker
             }
         }
 
+        public async Task PlayAsync()
+        {
+            foreach(var player in players)
+            {
+                var t = new Task(() => player.GetScore());
+                t.Start();
+            }
+            foreach (var player in players)
+            {
+                await player.Turn();
+            }
+        }
+
         private void DoAIMoves()
         {
+
             foreach(var player in players.Where(p => p.UsesAI))
             {
                 var play = player.AIDecisionHandler.MakeDecision();

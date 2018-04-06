@@ -2,6 +2,7 @@
 using FairPoker.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -165,6 +166,12 @@ namespace FairPoker.Classes
         public void Fold()
         {
             state = PlayerState.Folded;
+        }
+
+        public async Task Turn()
+        {
+            AIDecisionHandler aIDecisionHandler = new AIDecisionHandler(this);
+            Debug.WriteLine(AIDecisionHandler.MakeDecision());
         }
     }
 }
