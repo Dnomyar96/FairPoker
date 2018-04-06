@@ -185,6 +185,12 @@ namespace FairPoker.Classes
         {
             return state;
         }
+        public int GetTotalCash()
+        {
+            return cash;
+        }
+
+
 
         public async Task Turn()
         {

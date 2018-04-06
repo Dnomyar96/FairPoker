@@ -183,12 +183,11 @@
                     </Grid.RowDefinitions>
 
                     <Image Source="Assets/17177-200.png" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5"/>
-                    <TextBlock Text="2000" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Stencil" />
+                    <TextBlock x:Name="PlayerOneTotalMoneyText" Text="1000" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Stencil" />
                     <Button Content="Check" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CheckButton_Click" Foreground="White" Grid.Row="1" Grid.Column="0" FontFamily="Stencil" FontWeight="Bold" FontSize="25" />
-                    <!--<Button Content="Fold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FoldButton_Click" Foreground="White" Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />-->
-
-                    <!--<Button Content="Call" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CallButton_Click" Foreground="White" Grid.Row="1" Grid.Column="4" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />-->
-                    <Button Content="Raise" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="RaiseButton_Click" Foreground="White" Grid.Row="1" Grid.Column="5" FontWeight="Bold" FontFamily="Stencil" FontSize="25" />
+                <Button Content="Fold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FoldButton_Click" Foreground="White" Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />
+                <Button Content="Call" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CallButton_Click" Foreground="White" Grid.Row="1" Grid.Column="4" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />
+                <Button Content="Raise" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="RaiseButton_Click" Foreground="White" Grid.Row="1" Grid.Column="5" FontWeight="Bold" FontFamily="Stencil" FontSize="25" />
 
                 </Grid>
             </Grid>
@@ -226,6 +225,8 @@
                 <Image x:Name="PlayerOneCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
                 <TextBlock x:Name="PlayerOneTextPlayer" Text="Player 1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
                 <TextBlock x:Name="PlayerOneTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+                <TextBlock x:Name="PlayerOneTextCash" Text="" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+
             </Grid>
 
             <!-- P2 -->

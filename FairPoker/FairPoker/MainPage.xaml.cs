@@ -94,6 +94,11 @@ namespace FairPoker
                 if (amount < player.GetPlayerBet())
                 {
                     amount = player.GetPlayerBet();
+
+                    var PlayerOneBetCash = players[0].GetPlayerBet().ToString();
+                    var PlayerOneCash = players[0].GetTotalCash().ToString();
+                    PlayerOneTextCash.Text = PlayerOneBetCash;
+                    PlayerOneTotalMoneyText.Text = PlayerOneCash;
                 }
             }
 
@@ -168,7 +173,7 @@ namespace FairPoker
         }
 
         private void SetDefaultValues()
-        {
+        {      
             CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
             CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
@@ -321,9 +326,6 @@ namespace FairPoker
 
         private void SetScores()
         {
-
-       
-
             tableCards = new List<Card>()
                 {
 
