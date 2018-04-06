@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
-using System.Threading;
+using System.Threading.Tasks;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -74,22 +74,45 @@ namespace FairPoker
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Check Logic
+            //Similar to a call but no money is bet. If there is no raise preflop, the big blind may check.
+            players[0].Check();
         }
         private void FoldButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Fold Logic
+            //Pay nothing to the pot and throw away their hand, waiting for the next deal to play again.
+            players[0].Fold();
         }
         private void CallButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Call Logic
+            //Match the amount of the big blind.
+            int amount = 0;
+            foreach (var player in players)
+            {
+                if (amount < player.GetPlayerBet())
+                {
+                    amount = player.GetPlayerBet();
+                }
+            }
+
+            if(amount <= 0)
+            {
+                //there is nothing to call....
+            }
+            else
+            {
+                players[0].Call(amount);
+            }
+            
         }
         private void RaiseButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Raise Logic
-            if (Settings.SoundEffects)
-            {
-                CoinAudio();
-            }
+            //Raise the bet by doubling the amount of the big blind. A player may raise more depending on the betting style being played.
+            int amount = 0;
+            players[0].Raise(amount);
+            PlayAudio("chips.wav");
         }
 
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
@@ -265,8 +288,8 @@ namespace FairPoker
 
             foreach (var player in players)
             {
-                //Thread t = new Thread(() => player.CalculateScore(tableCards));
-                //t.Start();
+                Task t = new Task(() => player.CalculateScore(tableCards));
+                t.Start();
             }
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
@@ -362,23 +385,17 @@ namespace FairPoker
             }
         }
 
-        private async void CardAudio()
+        private async void PlayAudio(string filename)
         {
-            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
-            Windows.Storage.StorageFile file = await folder.GetFileAsync(@"card.wav");
-            Audio.AutoPlay = false;
-            Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
-            Audio.Volume = 0.3;
-            Audio.Play();
-        }
-        private async void CoinAudio()
-        {
-            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
-            Windows.Storage.StorageFile file = await folder.GetFileAsync(@"chips.wav");
-            Audio.AutoPlay = false;
-            Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
-            Audio.Volume = 0.3;
-            Audio.Play();
+            if (Settings.SoundEffects)
+            {
+                Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
+                Windows.Storage.StorageFile file = await folder.GetFileAsync(@filename);
+                Audio.AutoPlay = false;
+                Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
+                Audio.Volume = 0.3;
+                Audio.Play();
+            }
         }
 
         private async void TurnCard()
@@ -394,30 +411,21 @@ namespace FairPoker
                 CardImage1.Source = new BitmapImage(new Uri(card1.ImgUrl.ToString()));
                 CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
                 CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
-                if (Settings.SoundEffects)
-                {
-                    CardAudio();
-                }
+                PlayAudio("card.wav");
             }
             else if (gameState == RoundState.Flop)
             {
                 gameState = RoundState.Turn;
                 card4 = dealer.DealTurn();
                 CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
-                if (Settings.SoundEffects)
-                {
-                    CardAudio();
-                }
+                PlayAudio("card.wav");
             }
             else if (gameState == RoundState.Turn)
             {
                 gameState = RoundState.River;
                 card5 = dealer.DealRiver();
                 CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
-                if (Settings.SoundEffects)
-                {
-                    CardAudio();
-                }
+                PlayAudio("card.wav");
             }
             else
             {

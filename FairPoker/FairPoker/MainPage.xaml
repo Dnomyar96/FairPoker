@@ -185,9 +185,9 @@
                     <Image Source="Assets/17177-200.png" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5"/>
                     <TextBlock Text="2000" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,5,0,5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Stencil" />
                     <Button Content="Check" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CheckButton_Click" Foreground="White" Grid.Row="1" Grid.Column="0" FontFamily="Stencil" FontWeight="Bold" FontSize="25" />
-                    <Button Content="Fold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FoldButton_Click" Foreground="White" Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />
+                    <!--<Button Content="Fold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FoldButton_Click" Foreground="White" Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />-->
 
-                    <Button Content="Call" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CallButton_Click" Foreground="White" Grid.Row="1" Grid.Column="4" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />
+                    <!--<Button Content="Call" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CallButton_Click" Foreground="White" Grid.Row="1" Grid.Column="4" FontWeight="Bold" FontSize="25" FontFamily="Stencil" />-->
                     <Button Content="Raise" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="RaiseButton_Click" Foreground="White" Grid.Row="1" Grid.Column="5" FontWeight="Bold" FontFamily="Stencil" FontSize="25" />
 
                 </Grid>
