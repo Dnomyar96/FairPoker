@@ -74,20 +74,16 @@ namespace FairPoker
 
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Check Logic
-            //Similar to a call but no money is bet. If there is no raise preflop, the big blind may check.
             players[0].Check();
+            Next();
         }
         private void FoldButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Fold Logic
-            //Pay nothing to the pot and throw away their hand, waiting for the next deal to play again.
             players[0].Fold();
+            Next();
         }
         private void CallButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Call Logic
-            //Match the amount of the big blind.
             int amount = 0;
             foreach (var player in players)
             {
@@ -105,7 +101,7 @@ namespace FairPoker
             {
                 players[0].Call(amount);
             }
-            
+            Next();
         }
         private void RaiseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -114,6 +110,7 @@ namespace FairPoker
             int amount = 0;
             players[0].Raise(amount);
             PlayAudio("chips.wav");
+            Next();
         }
 
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
@@ -311,11 +308,7 @@ namespace FairPoker
 
         private void CardClick(object sender, RoutedEventArgs e)
         {
-            TurnCard();
-            SetScores();
-            SetChance();
-            Play();
-            DoAIMoves();
+            Next();
         }
 
         private void SetScores()
@@ -562,6 +555,15 @@ namespace FairPoker
         private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(OptionsPage));
+        }
+
+        private void Next()
+        {
+            TurnCard();
+            SetScores();
+            SetChance();
+            Play();
+            DoAIMoves();
         }
     }
 }
