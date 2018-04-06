@@ -477,7 +477,10 @@ namespace FairPoker
 
             foreach (var player in players)
             {
-                await player.Turn();
+                if (!player.Equals(players[0]))
+                {
+                 await player.Turn();
+                }
             }
         }
 
@@ -619,7 +622,6 @@ namespace FairPoker
             SetScores();
             SetChance();
             Play();
-            DoAIMoves();
         }
     }
 }
