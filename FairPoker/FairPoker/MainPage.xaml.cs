@@ -261,12 +261,12 @@ namespace FairPoker
                     card3,
                     card4,
                     card5
-                }.Where(c => c != null).ToList());
+                }.Where(c => c != null).ToList();
 
             foreach (var player in players)
             {
-                Thread t = new Thread(() => player.CalculateScore(tableCards));
-                t.Start();
+                //Thread t = new Thread(() => player.CalculateScore(tableCards));
+                //t.Start();
             }
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 

@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="d67684f9-5e98-4cf7-83de-ee46bad3d212"
-    Publisher="CN=Dnomyar96"
+    Name="ae05ef47-c6d4-4342-86f0-dd7133de6ab1"
+    Publisher="CN=ronal"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d67684f9-5e98-4cf7-83de-ee46bad3d212" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="ae05ef47-c6d4-4342-86f0-dd7133de6ab1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>FairPoker</DisplayName>
-    <PublisherDisplayName>Dnomyar96</PublisherDisplayName>
+    <PublisherDisplayName>ronal</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

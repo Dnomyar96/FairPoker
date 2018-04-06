@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{D32F9275-7BB1-427B-917D-3E6EC777C534}</ProjectGuid>
+    <ProjectGuid>{28433B62-CF72-4859-BE5C-ABF154490100}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FairPoker</RootNamespace>
     <AssemblyName>FairPoker</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -88,10 +88,9 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -132,49 +131,26 @@
     <Content Include="Assets\17177-200.png" />
     <Content Include="Assets\Background.jpg" />
     <Content Include="Assets\Background2.jpg" />
-    <Content Include="Assets\Cards\TenClovers.png" />
-    <Content Include="Assets\Cards\TenDiamonds.png" />
-    <Content Include="Assets\Cards\TenHearts.png" />
-    <Content Include="Assets\Cards\TenSpades.png" />
-    <Content Include="Assets\Cards\TwoClovers.png" />
-    <Content Include="Assets\Cards\TwoDiamonds.png" />
-    <Content Include="Assets\Cards\TwoHearts.png" />
-    <Content Include="Assets\Cards\TwoSpades.png" />
-    <Content Include="Assets\Cards\ThreeClovers.png" />
-    <Content Include="Assets\Cards\ThreeDiamonds.png" />
-    <Content Include="Assets\Cards\ThreeHearts.png" />
-    <Content Include="Assets\Cards\ThreeSpades.png" />
-    <Content Include="Assets\Cards\FourClovers.png" />
-    <Content Include="Assets\Cards\FourDiamonds.png" />
-    <Content Include="Assets\Cards\FourHearts.png" />
-    <Content Include="Assets\Cards\FourSpades.png" />
-    <Content Include="Assets\Cards\FiveClovers.png" />
-    <Content Include="Assets\Cards\FiveDiamonds.png" />
-    <Content Include="Assets\Cards\FiveHearts.png" />
-    <Content Include="Assets\Cards\FiveSpades.png" />
-    <Content Include="Assets\Cards\SixClovers.png" />
-    <Content Include="Assets\Cards\SixDiamonds.png" />
-    <Content Include="Assets\Cards\SixHearts.png" />
-    <Content Include="Assets\Cards\SixSpades.png" />
-    <Content Include="Assets\Cards\SevenClovers.png" />
-    <Content Include="Assets\Cards\SevenDiamonds.png" />
-    <Content Include="Assets\Cards\SevenHearts.png" />
-    <Content Include="Assets\Cards\SevenSpades.png" />
+    <Content Include="Assets\card.wav" />
+    <Content Include="Assets\Cards\AceClovers.png" />
+    <Content Include="Assets\Cards\AceDiamonds.png" />
+    <Content Include="Assets\Cards\AceHearts.png" />
+    <Content Include="Assets\Cards\aces.png" />
+    <Content Include="Assets\Cards\AceSpades.png" />
+    <Content Include="Assets\Cards\back_cards-07.png" />
+    <Content Include="Assets\Cards\blue_back.png" />
     <Content Include="Assets\Cards\EightClovers.png" />
     <Content Include="Assets\Cards\EightDiamonds.png" />
     <Content Include="Assets\Cards\EightHearts.png" />
     <Content Include="Assets\Cards\EightSpades.png" />
-    <Content Include="Assets\Cards\NineClovers.png" />
-    <Content Include="Assets\Cards\NineDiamonds.png" />
-    <Content Include="Assets\Cards\NineHearts.png" />
-    <Content Include="Assets\Cards\NineSpades.png" />
-    <Content Include="Assets\Cards\AceClovers.png" />
-    <Content Include="Assets\Cards\aces.png" />
-    <Content Include="Assets\Cards\AceDiamonds.png" />
-    <Content Include="Assets\Cards\AceHearts.png" />
-    <Content Include="Assets\Cards\AceSpades.png" />
-    <Content Include="Assets\Cards\back_cards-07.png" />
-    <Content Include="Assets\Cards\blue_back.png" />
+    <Content Include="Assets\Cards\FiveClovers.png" />
+    <Content Include="Assets\Cards\FiveDiamonds.png" />
+    <Content Include="Assets\Cards\FiveHearts.png" />
+    <Content Include="Assets\Cards\FiveSpades.png" />
+    <Content Include="Assets\Cards\FourClovers.png" />
+    <Content Include="Assets\Cards\FourDiamonds.png" />
+    <Content Include="Assets\Cards\FourHearts.png" />
+    <Content Include="Assets\Cards\FourSpades.png" />
     <Content Include="Assets\Cards\gray_back.png" />
     <Content Include="Assets\Cards\green_back.png" />
     <Content Include="Assets\Cards\honors_spade-14.png" />
@@ -189,18 +165,41 @@
     <Content Include="Assets\Cards\KingDiamonds.png" />
     <Content Include="Assets\Cards\KingHearts.png" />
     <Content Include="Assets\Cards\KingSpades.png" />
+    <Content Include="Assets\Cards\NineClovers.png" />
+    <Content Include="Assets\Cards\NineDiamonds.png" />
+    <Content Include="Assets\Cards\NineHearts.png" />
+    <Content Include="Assets\Cards\NineSpades.png" />
     <Content Include="Assets\Cards\purple_back.png" />
     <Content Include="Assets\Cards\QueenClovers.png" />
     <Content Include="Assets\Cards\QueenDiamonds.png" />
     <Content Include="Assets\Cards\QueenHearts.png" />
     <Content Include="Assets\Cards\QueenSpades.png" />
     <Content Include="Assets\Cards\red_back.png" />
+    <Content Include="Assets\Cards\SevenClovers.png" />
+    <Content Include="Assets\Cards\SevenDiamonds.png" />
+    <Content Include="Assets\Cards\SevenHearts.png" />
+    <Content Include="Assets\Cards\SevenSpades.png" />
+    <Content Include="Assets\Cards\SixClovers.png" />
+    <Content Include="Assets\Cards\SixDiamonds.png" />
+    <Content Include="Assets\Cards\SixHearts.png" />
+    <Content Include="Assets\Cards\SixSpades.png" />
+    <Content Include="Assets\Cards\TenClovers.png" />
+    <Content Include="Assets\Cards\TenDiamonds.png" />
+    <Content Include="Assets\Cards\TenHearts.png" />
+    <Content Include="Assets\Cards\TenSpades.png" />
+    <Content Include="Assets\Cards\ThreeClovers.png" />
+    <Content Include="Assets\Cards\ThreeDiamonds.png" />
+    <Content Include="Assets\Cards\ThreeHearts.png" />
+    <Content Include="Assets\Cards\ThreeSpades.png" />
+    <Content Include="Assets\Cards\TwoClovers.png" />
+    <Content Include="Assets\Cards\TwoDiamonds.png" />
+    <Content Include="Assets\Cards\TwoHearts.png" />
+    <Content Include="Assets\Cards\TwoSpades.png" />
     <Content Include="Assets\Cards\yellow_back.png" />
-    <Content Include="Assets\card.wav" />
     <Content Include="Assets\chips.wav" />
+    <Content Include="Assets\poker-chip.png" />
     <Content Include="Assets\Stenden.png" />
     <Content Include="Assets\Table.png" />
-    <Content Include="Assets\poker-chip.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -220,11 +219,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="OptionsPage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.0.8</Version>
+    </PackageReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
