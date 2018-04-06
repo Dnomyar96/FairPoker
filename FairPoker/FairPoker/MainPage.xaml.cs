@@ -309,12 +309,21 @@ namespace FairPoker
 
             foreach (Player player in players)
             {
+<<<<<<< HEAD
                 Task t = new Task(() => player.CalculateScore(tableCards));
                 t.Start();
             }
+<<<<<<< HEAD
+=======
+=======
+ 
+>>>>>>> 83eb79a50cd40adc66815553d39e83e93a55ae3f
+=======
                 player.CalculateScore(tableCards);
             }
 
+>>>>>>> Project-recovery
+>>>>>>> 29eefc69dc71a9e37a67bef9fa58ed3d105bac8b
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
