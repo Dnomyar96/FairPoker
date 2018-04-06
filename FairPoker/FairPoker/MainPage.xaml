@@ -240,8 +240,15 @@
                 </Grid.RowDefinitions>
                 <Image x:Name="PlayerTwoCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
                 <Image x:Name="PlayerTwoCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock x:Name="PlayerTwoTextPlayer" Text="Player 2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
-                <TextBlock x:Name="PlayerTwoTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                   <TextBlock x:Name="PlayerTwoTextPlayer" Text="Player 2"  Foreground="White" />
+                   <TextBlock x:Name="PlayerTwoTextStatus" Text=""  Foreground="White" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="left" VerticalAlignment="Center" Margin="25,5,0,0">
+
+                    <TextBlock x:Name="PlayerTwoTextCash" Text="" Foreground="White" FontSize="12" />
+                    <TextBlock x:Name="PlayerTwoTextHand" Text="" Foreground="White" FontSize="12" />
+                </StackPanel>
             </Grid>
 
             <!-- P3 -->
@@ -254,10 +261,17 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Image x:Name="PlayerThreeCardImage1" Source="Assets/Stenden.png"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
-                <Image x:Name="PlayerThreeCardImage2" Source="Assets/Stenden.png"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock x:Name="PlayerThreeTextPlayer" Text="Player 3" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
-                <TextBlock x:Name="PlayerThreeTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+                <Image x:Name="PlayerThreeCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
+                <Image x:Name="PlayerThreeCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <TextBlock x:Name="PlayerThreeTextPlayer" Text="Player 3"  Foreground="White" />
+                    <TextBlock x:Name="PlayerThreeTextStatus" Text=""  Foreground="White" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="left" VerticalAlignment="Center" Margin="25,5,0,0">
+
+                    <TextBlock x:Name="PlayerThreeTextCash" Text="" Foreground="White" FontSize="12" />
+                    <TextBlock x:Name="PlayerThreeTextHand" Text="" Foreground="White" FontSize="12" />
+                </StackPanel>
             </Grid>
 
             <!-- P4 -->
@@ -272,8 +286,15 @@
                 </Grid.RowDefinitions>
                 <Image x:Name="PlayerFourCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
                 <Image x:Name="PlayerFourCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock x:Name="PlayerFourTextPlayer" Text="Player 4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
-                <TextBlock x:Name="PlayerFourTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <TextBlock x:Name="PlayerFourTextPlayer" Text="Player 4"  Foreground="White" />
+                    <TextBlock x:Name="PlayerFourTextStatus" Text=""  Foreground="White" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="left" VerticalAlignment="Center" Margin="25,5,0,0">
+
+                    <TextBlock x:Name="PlayerFourTextCash" Text="" Foreground="White" FontSize="12" />
+                    <TextBlock x:Name="PlayerFourTextHand" Text="" Foreground="White" FontSize="12" />
+                </StackPanel>
             </Grid>
 
             <!-- P5 -->
@@ -288,8 +309,15 @@
                 </Grid.RowDefinitions>
                 <Image x:Name="PlayerFiveCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
                 <Image x:Name="PlayerFiveCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock x:Name="PlayerFiveTextPlayer" Text="Player 5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
-                <TextBlock x:Name="PlayerFiveTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <TextBlock x:Name="PlayerFiveTextPlayer" Text="Player 5"  Foreground="White" />
+                    <TextBlock x:Name="PlayerFiveTextStatus" Text=""  Foreground="White" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="left" VerticalAlignment="Center" Margin="25,5,0,0">
+
+                    <TextBlock x:Name="PlayerFiveTextCash" Text="" Foreground="White" FontSize="12" />
+                    <TextBlock x:Name="PlayerFiveTextHand" Text="" Foreground="White" FontSize="12" />
+                </StackPanel>
             </Grid>
 
             <!-- P6 -->
@@ -304,9 +332,17 @@
                 </Grid.RowDefinitions>
                 <Image x:Name="PlayerSixCardImage1" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,3,0" />
                 <Image x:Name="PlayerSixCardImage2" Source="Assets/Stenden.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  Margin="3,25,0,0" />
-                <TextBlock x:Name="PlayerSixTextPlayer" Text="Player 6" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Foreground="White" />
-                <TextBlock x:Name="PlayerSixTextHand" Text="" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" />
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <TextBlock x:Name="PlayerSixTextPlayer" Text="Player 6"  Foreground="White" />
+                    <TextBlock x:Name="PlayerSixTextStatus" Text=""  Foreground="White" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="left" VerticalAlignment="Center" Margin="25,5,0,0">
+
+                    <TextBlock x:Name="PlayerSixTextCash" Text="" Foreground="White" FontSize="12" />
+                    <TextBlock x:Name="PlayerSixTextHand" Text="" Foreground="White" FontSize="12" />
+                </StackPanel>
             </Grid>
+    
         </Grid>
     </Grid>
 </Page>

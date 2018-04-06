@@ -15,8 +15,10 @@ namespace FairPoker.Classes
 
         private List<Card> hand;
         private int cash;
+        public int bettingCash;
         private Score score;
-        private PlayerState state;
+        public PlayerState state;
+
 
         public Player()
         {
@@ -25,6 +27,13 @@ namespace FairPoker.Classes
             score = Score.HighCard;
             state = PlayerState.NotPlayed;
             AIDecisionHandler = new AIDecisionHandler(this);
+        }
+
+        public void Turn()
+        {
+            
+            AIDecisionHandler.MakeDecision();
+
         }
 
         /// <summary>
@@ -55,6 +64,8 @@ namespace FairPoker.Classes
         {
             return hand;
         }
+
+
 
         /// <summary>
         /// Calculates the score for this player
@@ -143,6 +154,8 @@ namespace FairPoker.Classes
             cash -= amount;
             state = PlayerState.Raised;
         }
+
+  
 
         /// <summary>
         /// Player raises. Returns amount that is bet this way.

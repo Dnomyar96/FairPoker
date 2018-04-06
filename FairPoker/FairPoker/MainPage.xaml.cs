@@ -180,43 +180,62 @@ namespace FairPoker
             PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
 
+
             if (playerCount > 1)
             {
                 var playerTwoCards = players[1].GetCards().ToArray();
+                var playerTwoBetting = players[1].bettingCash.ToString();
+                var playerTwoStatus = players[1].state.ToString();
+
                 GridP2.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
                 {
                     PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
                     PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
                 }
+                PlayerTwoTextCash.Text = "\u20AC" + playerTwoBetting;
+                PlayerTwoTextStatus.Text = playerTwoStatus;
             }
 
             if (playerCount > 2)
             {
-
                 var playerThreeCards = players[2].GetCards().ToArray();
+                var playerThreeBetting = players[2].bettingCash.ToString();
+                var playerThreeStatus = players[2].state.ToString();
+
                 GridP3.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
                 {
                     PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
                     PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
                 }
+                PlayerThreeTextCash.Text = "\u20AC" + playerThreeBetting;
+                PlayerThreeTextStatus.Text = playerThreeStatus;
             }
 
             if (playerCount > 3)
             {
                 var playerFourCards = players[3].GetCards().ToArray();
+                var playerFourBetting = players[3].bettingCash.ToString();
+                var playerFourStatus = players[3].state.ToString();
+
                 GridP4.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
                 {
                     PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
                     PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
                 }
+                PlayerFourTextCash.Text = "\u20AC" + playerFourBetting;
+                PlayerFourTextStatus.Text = playerFourStatus;
             }
 
             if (playerCount > 4)
             {
+   
                 var playerFiveCards = players[4].GetCards().ToArray();
+                var playerFiveBetting = players[4].bettingCash.ToString();
+                var playerFiveStatus = players[4].state.ToString();
+
                 GridP5.Visibility = Visibility.Visible;
                 if (Settings.HideOtherPlayersCards == false)
                 {
@@ -224,16 +243,24 @@ namespace FairPoker
                         PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
                         PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
                     }
+                    PlayerFiveTextCash.Text = "\u20AC" + playerFiveBetting;
+                    PlayerFiveTextStatus.Text = playerFiveStatus;
                 }
                 if (playerCount > 5)
                 {
+                
                     var playerSixCards = players[5].GetCards().ToArray();
+                    var playerSixBetting = players[5].bettingCash.ToString();
+                    var playerSixStatus = players[5].state.ToString();
+
                     GridP6.Visibility = Visibility.Visible;
                     if (Settings.HideOtherPlayersCards == false)
                     {
                         PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
                         PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
                     }
+                    PlayerSixTextCash.Text = "\u20AC" + playerSixBetting;
+                    PlayerSixTextStatus.Text = playerSixStatus;
                 }
                 SetScores();
                 SetChance();
@@ -253,7 +280,9 @@ namespace FairPoker
 
         private void SetScores()
         {
-            tableCards = new List<Card>()
+            foreach (var player in players)
+            {
+                tableCards = new List<Card>()
                 {
 
                     card1,
@@ -262,12 +291,8 @@ namespace FairPoker
                     card4,
                     card5
                 }.Where(c => c != null).ToList();
-
-            foreach (var player in players)
-            {
-                //Thread t = new Thread(() => player.CalculateScore(tableCards));
-                //t.Start();
             }
+
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
@@ -291,6 +316,8 @@ namespace FairPoker
                 PlayerSixTextHand.Text = players[5].GetScore().ToString();
             }
         }
+
+
 
         private void SetChance()
         {
@@ -361,6 +388,8 @@ namespace FairPoker
                 var play = player.AIDecisionHandler.MakeDecision();
             }
         }
+
+
 
         private async void CardAudio()
         {
