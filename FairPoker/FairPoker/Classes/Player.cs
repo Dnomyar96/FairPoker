@@ -2,6 +2,7 @@
 using FairPoker.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,8 @@ namespace FairPoker.Classes
         private int cash;
         public int bettingCash;
         private Score score;
-        public PlayerState state;
-
+        private PlayerState state;
+        private int bet;
 
         public Player()
         {
@@ -26,6 +27,7 @@ namespace FairPoker.Classes
             cash = 1000;
             score = Score.HighCard;
             state = PlayerState.NotPlayed;
+            bet = 100;
             AIDecisionHandler = new AIDecisionHandler(this);
         }
 
@@ -116,6 +118,7 @@ namespace FairPoker.Classes
                 throw new NotEnoughCashException();
 
             cash -= amount;
+            bet += amount;
             state = PlayerState.Called;
         }
 
@@ -152,6 +155,7 @@ namespace FairPoker.Classes
                 throw new NotEnoughCashException();
 
             cash -= amount;
+            bet += amount;
             state = PlayerState.Raised;
         }
 
@@ -178,6 +182,17 @@ namespace FairPoker.Classes
         public void Fold()
         {
             state = PlayerState.Folded;
+        }
+        
+        public int GetPlayerBet()
+        {
+            return bet;
+        }
+
+        public async Task Turn()
+        {
+            AIDecisionHandler aIDecisionHandler = new AIDecisionHandler(this);
+            Debug.WriteLine(AIDecisionHandler.MakeDecision());
         }
     }
 }
