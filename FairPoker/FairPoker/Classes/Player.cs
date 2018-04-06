@@ -16,6 +16,7 @@ namespace FairPoker.Classes
 
         private List<Card> hand;
         private int cash;
+        public int bettingCash;
         private Score score;
         private PlayerState state;
         private int bet;
@@ -59,6 +60,8 @@ namespace FairPoker.Classes
         {
             return hand;
         }
+
+
 
         /// <summary>
         /// Calculates the score for this player
@@ -151,6 +154,8 @@ namespace FairPoker.Classes
             state = PlayerState.Raised;
         }
 
+  
+
         /// <summary>
         /// Player raises. Returns amount that is bet this way.
         /// </summary>
@@ -176,6 +181,10 @@ namespace FairPoker.Classes
         public int GetPlayerBet()
         {
             return bet;
+        }
+        public PlayerState GetPlayerStatus()
+        {
+            return state;
         }
 
         public async Task Turn()
