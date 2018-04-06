@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
+using System.Threading;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -23,6 +24,7 @@ namespace FairPoker
         private RoundState gameState = RoundState.PreFlop;
 
         // Table Cards
+        List<Card> tableCards;
         Deck Cards = new Deck();
         private Card card1;
         private Card card2;
@@ -251,9 +253,7 @@ namespace FairPoker
 
         private void SetScores()
         {
-            foreach (var player in players)
-            {
-                player.CalculateScore(new List<Card>()
+            tableCards = new List<Card>()
                 {
 
                     card1,
@@ -262,8 +262,12 @@ namespace FairPoker
                     card4,
                     card5
                 }.Where(c => c != null).ToList());
-            }
 
+            foreach (var player in players)
+            {
+                Thread t = new Thread(() => player.CalculateScore(tableCards));
+                t.Start();
+            }
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
