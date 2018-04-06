@@ -7,10 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
-<<<<<<< HEAD
-=======
 using System.Threading;
->>>>>>> 83eb79a50cd40adc66815553d39e83e93a55ae3f
 using System.Threading.Tasks;
 
 
@@ -291,16 +288,12 @@ namespace FairPoker
                     card4,
                     card5
                 }.Where(c => c != null).ToList();
-<<<<<<< HEAD
 
             foreach (var player in players)
             {
                 Task t = new Task(() => player.CalculateScore(tableCards));
                 t.Start();
             }
-=======
- 
->>>>>>> 83eb79a50cd40adc66815553d39e83e93a55ae3f
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
 
             if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
