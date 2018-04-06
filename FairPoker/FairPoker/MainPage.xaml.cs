@@ -276,7 +276,7 @@ namespace FairPoker
                 }
                 SetScores();
                 SetChance();
-                PlayAsync();
+                play();
                 DoAIMoves();
             }
         }
@@ -288,7 +288,7 @@ namespace FairPoker
             TurnCard();
             SetScores();
             SetChance();
-            PlayAsync();
+            play();
             DoAIMoves();
         }
 
@@ -400,7 +400,7 @@ namespace FairPoker
             }
         }
 
-        public async Task PlayAsync()
+        public async void play()
         {
             foreach(var player in players)
             {
