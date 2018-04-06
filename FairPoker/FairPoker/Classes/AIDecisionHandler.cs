@@ -28,6 +28,8 @@ namespace FairPoker.Classes
         /// Makes a decision based on the current score and chance for a better score.
         /// Returns the Play to make. Raising always with the minimum amount.
         /// </summary>
+       
+
         public Plays MakeDecision()
         {
             var currentScore = player.GetScore();

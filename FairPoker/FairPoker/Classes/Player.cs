@@ -16,6 +16,7 @@ namespace FairPoker.Classes
 
         private List<Card> hand;
         private int cash;
+        public int bettingCash;
         private Score score;
         private PlayerState state;
         private int bet;
@@ -26,8 +27,9 @@ namespace FairPoker.Classes
             cash = 1000;
             score = Score.HighCard;
             state = PlayerState.NotPlayed;
-            bet = 100;
+            bet = 0;
             AIDecisionHandler = new AIDecisionHandler(this);
+            Bet(100);
         }
 
         /// <summary>
@@ -58,6 +60,8 @@ namespace FairPoker.Classes
         {
             return hand;
         }
+
+
 
         /// <summary>
         /// Calculates the score for this player
@@ -127,6 +131,7 @@ namespace FairPoker.Classes
                 throw new NotEnoughCashException();
 
             cash -= amount;
+            bet += amount;
             state = PlayerState.Bet;
         }
 
@@ -149,19 +154,20 @@ namespace FairPoker.Classes
             state = PlayerState.Raised;
         }
 
+  
+
         /// <summary>
         /// Player raises. Returns amount that is bet this way.
         /// </summary>
         /// <exception cref="PlayerFoldedException"/>
-        public int AllIn()
+        public void AllIn()
         {
             if (state == PlayerState.Folded)
                 throw new PlayerFoldedException();
 
-            var amountBet = cash;
+            bet += cash;
             cash = 0;
             state = PlayerState.Raised;
-            return amountBet;
         }
 
         /// <summary>
@@ -176,11 +182,33 @@ namespace FairPoker.Classes
         {
             return bet;
         }
+        public PlayerState GetPlayerStatus()
+        {
+            return state;
+        }
 
         public async Task Turn()
         {
             AIDecisionHandler aIDecisionHandler = new AIDecisionHandler(this);
             Debug.WriteLine(AIDecisionHandler.MakeDecision());
+            switch(AIDecisionHandler.MakeDecision())
+            {
+                case Plays.AllIn:
+                    AllIn();
+                    break;
+                case Plays.Call:
+                    //TODO: We need a callvalue from the AI. We dont know what other players do.
+                    //int amount = aIDecisionHandler.callvalue;
+                    int amount = 0;
+                    Call(amount);
+                    break;
+                case Plays.CheckOrFold:
+                    Check();
+                    break;
+                case Plays.Raise:
+                    Raise(100);
+                    break;
+            }
         }
     }
 }
