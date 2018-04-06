@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
-using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -20,7 +19,6 @@ namespace FairPoker
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
         // GameState
         private RoundState gameState = RoundState.PreFlop;
 
@@ -41,14 +39,16 @@ namespace FairPoker
         //Sounds
         MediaPlayer Audio;
 
+        /// <inheritdoc />
+        /// <summary>
+        /// Constructor for MainPage
+        /// </summary>
         public MainPage()
         {
-
             this.InitializeComponent();
             Audio = new MediaPlayer();
-            /// Required Set After Initialisation
+            // Required Set After Initialisation
             SetDefaultValues();
-
             dealer = new Dealer();
             players = new List<Player>();
 
@@ -61,27 +61,49 @@ namespace FairPoker
 
                 players.Add(player);
             }
+
             DealCards();
             SetScores();
             SetChance();
-            DoAIMoves();
         }
 
+        /// <summary>
+        /// Click function to quit the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
         }
 
+        /// <summary>
+        /// Click function for the check button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
             players[0].Check();
             Next();
         }
+
+        /// <summary>
+        /// Click function for fold button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FoldButton_Click(object sender, RoutedEventArgs e)
         {
             players[0].Fold();
             Next();
         }
+
+        /// <summary>
+        /// Click function for call button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CallButton_Click(object sender, RoutedEventArgs e)
         {
             int amount = 0;
@@ -93,16 +115,18 @@ namespace FairPoker
                 }
             }
 
-            if(amount <= 0)
-            {
-                //there is nothing to call....
-            }
-            else
+            if (amount > 0)
             {
                 players[0].Call(amount);
             }
             Next();
         }
+
+        /// <summary>
+        /// Click function for raise button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RaiseButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Raise Logic
@@ -113,17 +137,11 @@ namespace FairPoker
             Next();
         }
 
-        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Click function for new round
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewRound_Click(object sender, RoutedEventArgs e)
         {
             ResetChanceLabels();
@@ -136,7 +154,7 @@ namespace FairPoker
 
             gameState = RoundState.PreFlop;
 
-            SetDefaultValues();          
+            SetDefaultValues();
             dealer.NewRound();
 
             foreach (var player in players)
@@ -147,9 +165,11 @@ namespace FairPoker
             DealCards();
             SetScores();
             SetChance();
-            DoAIMoves();
         }
 
+        /// <summary>
+        /// Reset the labels which display the chances
+        /// </summary>
         private void ResetChanceLabels()
         {
             PairChance.Text = "Pair chance not available";
@@ -163,6 +183,9 @@ namespace FairPoker
             RoyalFlushChance.Text = "Royal flush chance not available";
         }
 
+        /// <summary>
+        /// Set default values
+        /// </summary>
         private void SetDefaultValues()
         {
             CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
@@ -201,6 +224,9 @@ namespace FairPoker
             }
         }
 
+        /// <summary>
+        /// Method to deal the cards
+        /// </summary>
         private void DealCards()
         {
             for (var i = 0; i < 2; i++)
@@ -281,6 +307,7 @@ namespace FairPoker
                     PlayerFiveTextCash.Text = "\u20AC" + playerFiveBetting;
                     PlayerFiveTextStatus.Text = playerFiveStatus;
                 }
+
                 if (playerCount > 5)
                 {
                 
@@ -297,20 +324,26 @@ namespace FairPoker
                     PlayerSixTextCash.Text = "\u20AC" + playerSixBetting;
                     PlayerSixTextStatus.Text = playerSixStatus;
                 }
+
                 SetScores();
                 SetChance();
                 Play();
-                DoAIMoves();
             }
         }
 
-
-
+        /// <summary>
+        /// Click function for cards
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CardClick(object sender, RoutedEventArgs e)
         {
             Next();
         }
 
+        /// <summary>
+        /// Method to set scores
+        /// </summary>
         private void SetScores()
         {
             tableCards = new List<Card>()
@@ -337,37 +370,42 @@ namespace FairPoker
             {
                 PlayerTwoTextHand.Text = players[1].GetScore().ToString();
             }
+
             if ((playerCount > 2) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerThreeTextHand.Text = players[2].GetScore().ToString();
             }
+
             if ((playerCount > 3) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerFourTextHand.Text = players[3].GetScore().ToString();
             }
+
             if ((playerCount > 4) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerFiveTextHand.Text = players[4].GetScore().ToString();
             }
+
             if ((playerCount > 5) && (Settings.HideOtherPlayersCards == false))
             {
                 PlayerSixTextHand.Text = players[5].GetScore().ToString();
             }
         }
 
-
-
+        /// <summary>
+        /// Method to set the chance
+        /// </summary>
         private void SetChance()
         {
             var player = players.FirstOrDefault();
             var cards = player.GetCards().Concat(new List<Card>()
-                {
-                    card1,
-                    card2,
-                    card3,
-                    card4,
-                    card5
-                }.Where(c => c != null));
+            {
+                card1,
+                card2,
+                card3,
+                card4,
+                card5
+            }.Where(c => c != null));
             if (cards.Count() < 7)
             {
                 var straightChance = ChanceCalculator.StraightChance(cards);
@@ -375,26 +413,31 @@ namespace FairPoker
                 {
                     StraightChance.Text = straightChance.ToString("Straight: 0.##") + "%";
                 }
+
                 var pairChance = ChanceCalculator.PairChance(cards);
                 if (pairChance > 0)
                 {
                     PairChance.Text = pairChance.ToString("Pair: 0.##") + "%";
                 }
+
                 var twoPairChance = ChanceCalculator.TwoPairChance(cards);
                 if (twoPairChance > 0)
                 {
                     TwoPairChance.Text = twoPairChance.ToString("Two Pair: 0.##") + "%";
                 }
+
                 var threeOfAKindChance = ChanceCalculator.ThreeOfAKindChance(cards);
                 if (threeOfAKindChance > 0)
                 {
                     ThreeOfAKindChance.Text = threeOfAKindChance.ToString("Three of a kind: 0.##") + "%";
                 }
+
                 var flushChance = ChanceCalculator.FlushChance(cards);
                 if (flushChance > 0)
                 {
                     FlushChance.Text = flushChance.ToString("Flush: 0.##") + "%";
                 }
+
                 var fullHouseChance = ChanceCalculator.FullHouseChance(cards);
                 if (fullHouseChance > 0)
                 {
@@ -406,11 +449,13 @@ namespace FairPoker
                 {
                     FourOfKindChance.Text = fourOfAKindChance.ToString("Four of a kind: 0.##") + "%";
                 }
+
                 var straightFlushChance = ChanceCalculator.StraightFlushChance(cards);
                 if (straightFlushChance > 0)
                 {
                     StraightFlushChance.Text = straightFlushChance.ToString("Straight flush: 0.##") + "%";
                 }
+
                 var royalFlushChance = ChanceCalculator.RoyalFlushChance(cards);
                 if (royalFlushChance > 0)
                 {
@@ -419,33 +464,33 @@ namespace FairPoker
             }
         }
 
+        /// <summary>
+        /// Method to play when cards are turned. Triggers tasks for players
+        /// </summary>
         public async void Play()
         {
-            foreach(var player in players)
+            foreach (var player in players)
             {
                 var t = new Task(() => player.GetScore());
                 t.Start();
             }
+
             foreach (var player in players)
             {
                 await player.Turn();
             }
         }
 
-        private void DoAIMoves()
-        {
-
-            foreach(var player in players.Where(p => p.UsesAI))
-            {
-                var play = player.AIDecisionHandler.MakeDecision();
-            }
-        }
-
+        /// <summary>
+        /// Method to play audio file
+        /// </summary>
+        /// <param name="filename"></param>
         private async void PlayAudio(string filename)
         {
             if (Settings.SoundEffects)
             {
-                Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
+                Windows.Storage.StorageFolder folder =
+                    await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
                 Windows.Storage.StorageFile file = await folder.GetFileAsync(@filename);
                 Audio.AutoPlay = false;
                 Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
@@ -454,9 +499,11 @@ namespace FairPoker
             }
         }
 
+        /// <summary>
+        /// Method for turning a card
+        /// </summary>
         private async void TurnCard()
         {
-
             if (gameState == RoundState.PreFlop)
             {
                 gameState = RoundState.Flop;
@@ -496,6 +543,9 @@ namespace FairPoker
             }
         }
 
+        /// <summary>
+        /// Method to show all cards
+        /// </summary>
         private void ShowAllCards()
         {
             if (playerCount > 1)
@@ -509,7 +559,6 @@ namespace FairPoker
 
             if (playerCount > 2)
             {
-
                 var playerThreeCards = players[2].GetCards().ToArray();
                 GridP3.Visibility = Visibility.Visible;
                 PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
@@ -545,16 +594,23 @@ namespace FairPoker
             }
         }
 
-
-        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        // Handles the Click event on the Button on the page and opens the Popup. 
+        /// <summary>
+        /// Method to show popup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowPopupOffsetClicked(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(OptionsPage));
+        }
+
+        /// <summary>
+        /// Click function for button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
         }
 
         private void Next()

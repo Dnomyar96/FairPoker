@@ -14,7 +14,6 @@ namespace FairPoker.Classes
         public static bool HideChances { get; set; }
         public static bool SoundEffects { get; set; }
 
-
         static Settings()
         {
             PlayerCount = 4;
