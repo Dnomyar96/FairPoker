@@ -112,11 +112,6 @@ namespace FairPoker
                 if (amount < player.GetPlayerBet())
                 {
                     amount = player.GetPlayerBet();
-
-                    var PlayerOneBetCash = players[0].GetPlayerBet().ToString();
-                    var PlayerOneCash = players[0].GetTotalCash().ToString();
-                    PlayerOneTextCash.Text = PlayerOneBetCash;
-                    PlayerOneTotalMoneyText.Text = PlayerOneCash;
                 }
             }
 
@@ -136,7 +131,7 @@ namespace FairPoker
         {
             //TODO: Raise Logic
             //Raise the bet by doubling the amount of the big blind. A player may raise more depending on the betting style being played.
-            int amount = 0;
+            int amount = 50;
             players[0].Raise(amount);
             PlayAudio("chips.wav");
             Next();
@@ -246,7 +241,6 @@ namespace FairPoker
             PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
             PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
 
-
             if (playerCount > 1)
             {
                 var playerTwoCards = players[1].GetCards().ToArray();
@@ -297,7 +291,6 @@ namespace FairPoker
 
             if (playerCount > 4)
             {
-   
                 var playerFiveCards = players[4].GetCards().ToArray();
                 var playerFiveBetting = players[4].bettingCash.ToString();
                 var playerFiveStatus = players[4].GetPlayerState().ToString();
@@ -312,28 +305,27 @@ namespace FairPoker
                     PlayerFiveTextCash.Text = "\u20AC" + playerFiveBetting;
                     PlayerFiveTextStatus.Text = playerFiveStatus;
                 }
-
-                if (playerCount > 5)
-                {
-                
-                    var playerSixCards = players[5].GetCards().ToArray();
-                    var playerSixBetting = players[5].bettingCash.ToString();
-                    var playerSixStatus = players[5].GetPlayerState().ToString();
-
-                    GridP6.Visibility = Visibility.Visible;
-                    if (Settings.HideOtherPlayersCards == false)
-                    {
-                        PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
-                        PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
-                    }
-                    PlayerSixTextCash.Text = "\u20AC" + playerSixBetting;
-                    PlayerSixTextStatus.Text = playerSixStatus;
-                }
-
-                SetScores();
-                SetChance();
-                Play();
             }
+
+            if (playerCount > 5)
+            {
+                var playerSixCards = players[5].GetCards().ToArray();
+                var playerSixBetting = players[5].bettingCash.ToString();
+                var playerSixStatus = players[5].GetPlayerState().ToString();
+
+                GridP6.Visibility = Visibility.Visible;
+                if (Settings.HideOtherPlayersCards == false)
+                {
+                    PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
+                    PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
+                }
+                PlayerSixTextCash.Text = "\u20AC" + playerSixBetting;
+                PlayerSixTextStatus.Text = playerSixStatus;
+            }
+
+            SetScores();
+            SetChance();
+            Play();
         }
 
         /// <summary>
@@ -370,30 +362,46 @@ namespace FairPoker
             }
 
             PlayerOneTextHand.Text = players[0].GetScore().ToString();
+            PlayerOneTotalMoneyText.Text = players[0].GetTotalCash().ToString();
 
-            if ((playerCount > 1) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 1)
             {
-                PlayerTwoTextHand.Text = players[1].GetScore().ToString();
+                if(Settings.HideOtherPlayersCards == false)
+                    PlayerTwoTextHand.Text = players[1].GetScore().ToString();
+                PlayerTwoTextCash.Text = players[1].GetPlayerBet().ToString();
+                PlayerTwoTextStatus.Text = players[1].GetPlayerStatus().ToString();
             }
 
-            if ((playerCount > 2) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 2)
             {
-                PlayerThreeTextHand.Text = players[2].GetScore().ToString();
+                if (Settings.HideOtherPlayersCards == false)
+                    PlayerThreeTextHand.Text = players[2].GetScore().ToString();
+                PlayerThreeTextCash.Text = players[2].GetPlayerBet().ToString();
+                PlayerThreeTextStatus.Text = players[2].GetPlayerStatus().ToString();
             }
 
-            if ((playerCount > 3) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 3)
             {
-                PlayerFourTextHand.Text = players[3].GetScore().ToString();
+                if (Settings.HideOtherPlayersCards == false)
+                    PlayerFourTextHand.Text = players[3].GetScore().ToString();
+                PlayerFourTextCash.Text = players[3].GetPlayerBet().ToString();
+                PlayerFourTextStatus.Text = players[3].GetPlayerStatus().ToString();
             }
 
-            if ((playerCount > 4) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 4)
             {
-                PlayerFiveTextHand.Text = players[4].GetScore().ToString();
+                if (Settings.HideOtherPlayersCards == false)
+                    PlayerFiveTextHand.Text = players[4].GetScore().ToString();
+                PlayerFiveTextCash.Text = players[4].GetPlayerBet().ToString();
+                PlayerFiveTextStatus.Text = players[4].GetPlayerStatus().ToString();
             }
 
-            if ((playerCount > 5) && (Settings.HideOtherPlayersCards == false))
+            if (playerCount > 5)
             {
-                PlayerSixTextHand.Text = players[5].GetScore().ToString();
+                if (Settings.HideOtherPlayersCards == false)
+                    PlayerSixTextHand.Text = players[5].GetScore().ToString();
+                PlayerSixTextCash.Text = players[5].GetPlayerBet().ToString();
+                PlayerSixTextStatus.Text = players[5].GetPlayerStatus().ToString();
             }
         }
 
@@ -484,7 +492,7 @@ namespace FairPoker
             {
                 if (!player.Equals(players[0]))
                 {
-                 await player.Turn();
+                    await player.Turn();
                 }
             }
         }

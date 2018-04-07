@@ -28,6 +28,12 @@ namespace FairPoker.Classes
         /// Makes a decision based on the current score and chance for a better score.
         /// Returns the Play to make. Raising always with the minimum amount.
         /// </summary>
+        /// 
+
+        //TODO: AI needs to know State of players before it in order to properly know what to do.
+        //TODO: AI cant bet if it has no cash
+        //TODO: AI cant raise if it has no extra cash
+        //TODO: AI cant call when nobody else raised.
        
 
         public Plays MakeDecision()

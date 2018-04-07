@@ -20,6 +20,7 @@ namespace FairPoker.Classes
         private Score score;
         private PlayerState state;
         private int bet;
+        const int defaultbet = 100;
 
         public Player()
         {
@@ -29,7 +30,7 @@ namespace FairPoker.Classes
             state = PlayerState.NotPlayed;
             bet = 0;
             AIDecisionHandler = new AIDecisionHandler(this);
-            Bet(100);
+            Bet(defaultbet);
         }
 
         /// <summary>
@@ -42,6 +43,8 @@ namespace FairPoker.Classes
             hand = new List<Card>();
             score = Score.HighCard;
             state = playerState;
+            bet = 0;
+            Bet(defaultbet);
         }
 
         /// <summary>
