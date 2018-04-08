@@ -13,24 +13,20 @@ namespace FairPoker.Classes
     {
         public bool UsesAI { get; set; }
         public AIDecisionHandler AIDecisionHandler { get; set; }
+        public int BettingCash { get; set; }
 
         private List<Card> hand;
         private int cash;
-        public int bettingCash;
         private Score score;
         private PlayerState state;
-        private int bet;
+        private int bet; // TODO: Review this vs. BettingCash
+
         const int defaultbet = 100;
 
         public Player()
         {
-            hand = new List<Card>();
             cash = 1000;
-            score = Score.HighCard;
-            state = PlayerState.NotPlayed;
-            bet = 0;
             AIDecisionHandler = new AIDecisionHandler(this);
-            Bet(defaultbet);
         }
 
         /// <summary>
@@ -106,10 +102,12 @@ namespace FairPoker.Classes
         /// <param name="amount">The amount the player adds to the pot</param>
         /// <exception cref="NotEnoughCashException"/>
         /// <exception cref="PlayerFoldedException"/>
-        public void Call(int amount)
+        public void Call(int requiredBet)
         {
             if (state == PlayerState.Folded)
                 throw new PlayerFoldedException();
+
+            var amount = requiredBet - BettingCash;
 
             if (cash < amount)
                 throw new NotEnoughCashException();
@@ -181,11 +179,11 @@ namespace FairPoker.Classes
             state = PlayerState.Folded;
         }
         
-        public int GetPlayerBet()
+        public int GetBet()
         {
             return bet;
         }
-        public PlayerState GetPlayerStatus()
+        public PlayerState GetStatus()
         {
             return state;
         }
@@ -211,7 +209,7 @@ namespace FairPoker.Classes
                     // ^ No we don't. Calling means putting in as much money as is required to continue playing. Every player
                     // needs to put in the same amount (exception being All-In and Fold) to continue. So the amount every player 
                     // has to bet needs to be stored somewhere. So:                    
-                    int amount = amountRequiredToBet - bettingCash;
+                    int amount = amountRequiredToBet - BettingCash;
 
                     if (amount <= 0)
                     {
@@ -222,7 +220,7 @@ namespace FairPoker.Classes
                     Call(amount);
                     break;
                 case Plays.CheckOrFold:
-                    if(amountRequiredToBet > bettingCash)
+                    if(amountRequiredToBet > BettingCash)
                     {
                         Fold();
                         break;

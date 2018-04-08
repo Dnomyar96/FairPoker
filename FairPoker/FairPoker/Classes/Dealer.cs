@@ -10,11 +10,6 @@ namespace FairPoker.Classes
     {
         private Deck deck;
 
-        public Dealer()
-        {
-            deck = new Deck();
-        }
-
         /// <summary>
         /// Start a new round. The deck is reset.
         /// </summary>

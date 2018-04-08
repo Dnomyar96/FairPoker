@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Media.Playback;
 using System.Threading.Tasks;
+using FairPoker.Exceptions;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -19,25 +20,11 @@ namespace FairPoker
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        // GameState
-        private RoundState gameState = RoundState.PreFlop;
-
-        // Table Cards
-        List<Card> tableCards;
-        Deck Cards = new Deck();
-        private Card card1;
-        private Card card2;
-        private Card card3;
-        private Card card4;
-        private Card card5;
-
-        //Dealer and Players
-        private Dealer dealer;
+        private GameState gameState;
         private int playerCount = Settings.PlayerCount;
-        private List<Player> players;
 
         //Sounds
-        MediaPlayer Audio;
+        MediaPlayer audio;
 
         /// <inheritdoc />
         /// <summary>
@@ -46,21 +33,10 @@ namespace FairPoker
         public MainPage()
         {
             this.InitializeComponent();
-            Audio = new MediaPlayer();
+            gameState = new GameState();
+            audio = new MediaPlayer();
             // Required Set After Initialisation
             SetDefaultValues();
-            dealer = new Dealer();
-            players = new List<Player>();
-
-            for (var i = 0; i < playerCount; i++)
-            {
-                var player = new Player();
-
-                if (i > 0)
-                    player.UsesAI = true;
-
-                players.Add(player);
-            }
 
             DealCards();
             SetScores();
@@ -84,7 +60,7 @@ namespace FairPoker
         /// <param name="e"></param>
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
-            players[0].Check();
+            gameState.Players[0].Check();
             Next();
         }
 
@@ -95,7 +71,7 @@ namespace FairPoker
         /// <param name="e"></param>
         private void FoldButton_Click(object sender, RoutedEventArgs e)
         {
-            players[0].Fold();
+            gameState.Players[0].Fold();
             Next();
         }
 
@@ -106,18 +82,18 @@ namespace FairPoker
         /// <param name="e"></param>
         private void CallButton_Click(object sender, RoutedEventArgs e)
         {
-            int amount = 0;
-            foreach (var player in players)
-            {
-                if (amount < player.GetPlayerBet())
-                {
-                    amount = player.GetPlayerBet();
-                }
-            }
+            int amount = gameState.RequiredBetPerPlayer;
 
             if (amount > 0)
             {
-                players[0].Call(amount);
+                try
+                {
+                    gameState.Players[0].Call(amount);
+                }
+                catch(NotEnoughCashException)
+                {
+                    gameState.Players[0].AllIn();
+                }
             }
             Next();
         }
@@ -132,7 +108,18 @@ namespace FairPoker
             //TODO: Raise Logic
             //Raise the bet by doubling the amount of the big blind. A player may raise more depending on the betting style being played.
             int amount = 50;
-            players[0].Raise(amount);
+
+            try
+            {
+                gameState.Players[0].Raise(amount);
+            }
+            catch (NotEnoughCashException)
+            {
+                gameState.Players[0].AllIn();
+            }
+
+            gameState.RequiredBetPerPlayer += amount;
+
             PlayAudio("chips.wav");
             Next();
         }
@@ -144,24 +131,6 @@ namespace FairPoker
         /// <param name="e"></param>
         private void NewRound_Click(object sender, RoutedEventArgs e)
         {
-            ResetChanceLabels();
-
-            card1 = null;
-            card2 = null;
-            card3 = null;
-            card4 = null;
-            card5 = null;
-
-            gameState = RoundState.PreFlop;
-
-            SetDefaultValues();
-            dealer.NewRound();
-
-            foreach (var player in players)
-            {
-                player.NewRound();
-            }
-
             DealCards();
             SetScores();
             SetChance();
@@ -187,35 +156,36 @@ namespace FairPoker
         /// Set default values
         /// </summary>
         private void SetDefaultValues()
-        {      
-            CardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            CardImage5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+        {
+            var defaultCardUrl = "ms-appx:///Assets/Stenden.png";
+            SetImage(CardImage1, defaultCardUrl);
+            SetImage(CardImage2, defaultCardUrl);
+            SetImage(CardImage3, defaultCardUrl);
+            SetImage(CardImage4, defaultCardUrl);
+            SetImage(CardImage5, defaultCardUrl);
 
-            PlayerOneCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            PlayerOneCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetImage(PlayerOneCardImage1, defaultCardUrl);
+            SetImage(PlayerOneCardImage2, defaultCardUrl);
             PlayerOneTextHand.Text = "";
 
-            PlayerTwoCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            PlayerTwoCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetImage(PlayerTwoCardImage1, defaultCardUrl);
+            SetImage(PlayerTwoCardImage2, defaultCardUrl);
             PlayerTwoTextHand.Text = "";
 
-            PlayerThreeCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            PlayerThreeCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetImage(PlayerThreeCardImage1, defaultCardUrl);
+            SetImage(PlayerThreeCardImage2, defaultCardUrl);
             PlayerThreeTextHand.Text = "";
 
-            PlayerFourCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            PlayerFourCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetImage(PlayerFourCardImage1, defaultCardUrl);
+            SetImage(PlayerFourCardImage2, defaultCardUrl);
             PlayerFourTextHand.Text = "";
 
-            PlayerFiveCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            PlayerFiveCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetImage(PlayerFiveCardImage1, defaultCardUrl);
+            SetImage(PlayerFiveCardImage2, defaultCardUrl);
             PlayerFiveTextHand.Text = "";
 
-            PlayerSixCardImage1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
-            PlayerSixCardImage2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Stenden.png"));
+            SetImage(PlayerSixCardImage1, defaultCardUrl);
+            SetImage(PlayerSixCardImage2, defaultCardUrl);
             PlayerSixTextHand.Text = "";
 
             if (!Settings.HideChances)
@@ -231,101 +201,50 @@ namespace FairPoker
         {
             for (var i = 0; i < 2; i++)
             {
-                foreach (var player in players)
+                foreach (var player in gameState.Players)
                 {
-                    dealer.DealCard(player);
+                    gameState.Dealer.DealCard(player);
                 }
             }
 
-            var playerOneCards = players[0].GetCards().ToArray();
-            PlayerOneCardImage1.Source = new BitmapImage(new Uri(playerOneCards[0].ImgUrl));
-            PlayerOneCardImage2.Source = new BitmapImage(new Uri(playerOneCards[1].ImgUrl));
+            var playerOneCards = gameState.Players[0].GetCards().ToArray();
+            SetImage(PlayerOneCardImage1, playerOneCards[0].ImgUrl);
+            SetImage(PlayerOneCardImage2, playerOneCards[2].ImgUrl);
 
             if (playerCount > 1)
-            {
-                var playerTwoCards = players[1].GetCards().ToArray();
-                var playerTwoBetting = players[1].bettingCash.ToString();
-                var playerTwoStatus = players[1].GetPlayerState().ToString();
-
-                GridP2.Visibility = Visibility.Visible;
-                if (Settings.HideOtherPlayersCards == false)
-                {
-                    PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-                    PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
-                }
-                PlayerTwoTextCash.Text = "\u20AC" + playerTwoBetting;
-                PlayerTwoTextStatus.Text = playerTwoStatus;
-            }
+                SetPlayerCards(gameState.Players[1], PlayerTwoCardImage1, PlayerTwoCardImage2, PlayerTwoTextCash, PlayerTwoTextStatus);
 
             if (playerCount > 2)
-            {
-                var playerThreeCards = players[2].GetCards().ToArray();
-                var playerThreeBetting = players[2].bettingCash.ToString();
-                var playerThreeStatus = players[2].GetPlayerState().ToString();
-
-                GridP3.Visibility = Visibility.Visible;
-                if (Settings.HideOtherPlayersCards == false)
-                {
-                    PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
-                    PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
-                }
-                PlayerThreeTextCash.Text = "\u20AC" + playerThreeBetting;
-                PlayerThreeTextStatus.Text = playerThreeStatus;
-            }
+                SetPlayerCards(gameState.Players[2], PlayerThreeCardImage1, PlayerThreeCardImage2, PlayerThreeTextCash, PlayerThreeTextStatus);
 
             if (playerCount > 3)
-            {
-                var playerFourCards = players[3].GetCards().ToArray();
-                var playerFourBetting = players[3].bettingCash.ToString();
-                var playerFourStatus = players[3].GetPlayerState().ToString();
-
-                GridP4.Visibility = Visibility.Visible;
-                if (Settings.HideOtherPlayersCards == false)
-                {
-                    PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
-                    PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
-                }
-                PlayerFourTextCash.Text = "\u20AC" + playerFourBetting;
-                PlayerFourTextStatus.Text = playerFourStatus;
-            }
+                SetPlayerCards(gameState.Players[3], PlayerFourCardImage1, PlayerFourCardImage2, PlayerFourTextCash, PlayerFourTextStatus);
 
             if (playerCount > 4)
-            {
-                var playerFiveCards = players[4].GetCards().ToArray();
-                var playerFiveBetting = players[4].bettingCash.ToString();
-                var playerFiveStatus = players[4].GetPlayerState().ToString();
-
-                GridP5.Visibility = Visibility.Visible;
-                if (Settings.HideOtherPlayersCards == false)
-                {
-                    {
-                        PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
-                        PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
-                    }
-                    PlayerFiveTextCash.Text = "\u20AC" + playerFiveBetting;
-                    PlayerFiveTextStatus.Text = playerFiveStatus;
-                }
-            }
+                SetPlayerCards(gameState.Players[4], PlayerFiveCardImage1, PlayerFiveCardImage2, PlayerFiveTextCash, PlayerFiveTextStatus);
 
             if (playerCount > 5)
-            {
-                var playerSixCards = players[5].GetCards().ToArray();
-                var playerSixBetting = players[5].bettingCash.ToString();
-                var playerSixStatus = players[5].GetPlayerState().ToString();
-
-                GridP6.Visibility = Visibility.Visible;
-                if (Settings.HideOtherPlayersCards == false)
-                {
-                    PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
-                    PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
-                }
-                PlayerSixTextCash.Text = "\u20AC" + playerSixBetting;
-                PlayerSixTextStatus.Text = playerSixStatus;
-            }
+                SetPlayerCards(gameState.Players[5], PlayerSixCardImage1, PlayerSixCardImage2, PlayerSixTextCash, PlayerSixTextStatus);
 
             SetScores();
             SetChance();
             Play();
+        }
+
+        private void SetPlayerCards(Player player, Image image, Image imageTwo, TextBlock cashText, TextBlock statusText)
+        {
+            var betting = player.BettingCash.ToString();
+            var status = player.GetPlayerState().ToString();
+
+            GridP2.Visibility = Visibility.Visible;
+            if (Settings.HideOtherPlayersCards == false)
+            {
+                var cards = player.GetCards().ToArray();
+                SetImage(image, cards[0].ImgUrl);
+                SetImage(image, cards[1].ImgUrl);
+            }
+            cashText.Text = "\u20AC" + betting;
+            statusText.Text = status;
         }
 
         /// <summary>
@@ -343,66 +262,40 @@ namespace FairPoker
         /// </summary>
         private void SetScores()
         {
-            tableCards = new List<Card>()
-            {
-
-                card1,
-                card2,
-                card3,
-                card4,
-                card5
-            }.Where(c => c != null).ToList();
-            
-
-            foreach (Player player in players)
+            var tableCards = gameState.TableCards.Where(c => c != null).ToList();
+            foreach (Player player in gameState.Players)
             {
                 Task t = new Task(() => player.CalculateScore(tableCards));
                 t.Start();
                 player.CalculateScore(tableCards);
             }
 
-            PlayerOneTextHand.Text = players[0].GetScore().ToString();
-            PlayerOneTotalMoneyText.Text = players[0].GetTotalCash().ToString();
+            PlayerOneTextHand.Text = gameState.Players[0].GetScore().ToString();
+            PlayerOneTotalMoneyText.Text = gameState.Players[0].GetTotalCash().ToString();
 
             if (playerCount > 1)
-            {
-                if(Settings.HideOtherPlayersCards == false)
-                    PlayerTwoTextHand.Text = players[1].GetScore().ToString();
-                PlayerTwoTextCash.Text = players[1].GetPlayerBet().ToString();
-                PlayerTwoTextStatus.Text = players[1].GetPlayerStatus().ToString();
-            }
+                SetPlayerTexts(new TextBlock[] { PlayerTwoTextHand, PlayerTwoTextCash, PlayerTwoTextStatus }, gameState.Players[1]);
 
             if (playerCount > 2)
-            {
-                if (Settings.HideOtherPlayersCards == false)
-                    PlayerThreeTextHand.Text = players[2].GetScore().ToString();
-                PlayerThreeTextCash.Text = players[2].GetPlayerBet().ToString();
-                PlayerThreeTextStatus.Text = players[2].GetPlayerStatus().ToString();
-            }
+                SetPlayerTexts(new TextBlock[] { PlayerThreeTextHand, PlayerThreeTextCash, PlayerThreeTextStatus }, gameState.Players[2]);
 
             if (playerCount > 3)
-            {
-                if (Settings.HideOtherPlayersCards == false)
-                    PlayerFourTextHand.Text = players[3].GetScore().ToString();
-                PlayerFourTextCash.Text = players[3].GetPlayerBet().ToString();
-                PlayerFourTextStatus.Text = players[3].GetPlayerStatus().ToString();
-            }
+                SetPlayerTexts(new TextBlock[] { PlayerFourTextHand, PlayerFourTextCash, PlayerFourTextStatus }, gameState.Players[3]);
 
             if (playerCount > 4)
-            {
-                if (Settings.HideOtherPlayersCards == false)
-                    PlayerFiveTextHand.Text = players[4].GetScore().ToString();
-                PlayerFiveTextCash.Text = players[4].GetPlayerBet().ToString();
-                PlayerFiveTextStatus.Text = players[4].GetPlayerStatus().ToString();
-            }
+                SetPlayerTexts(new TextBlock[] { PlayerFiveTextHand, PlayerFiveTextCash, PlayerFiveTextStatus }, gameState.Players[4]);
 
             if (playerCount > 5)
-            {
-                if (Settings.HideOtherPlayersCards == false)
-                    PlayerSixTextHand.Text = players[5].GetScore().ToString();
-                PlayerSixTextCash.Text = players[5].GetPlayerBet().ToString();
-                PlayerSixTextStatus.Text = players[5].GetPlayerStatus().ToString();
-            }
+                SetPlayerTexts(new TextBlock[] { PlayerSixTextHand, PlayerSixTextCash, PlayerSixTextStatus }, gameState.Players[5]);
+        }
+
+        private void SetPlayerTexts(TextBlock[] textBlocks, Player player)
+        {
+            if (Settings.HideOtherPlayersCards == false)
+                textBlocks[0].Text = player.GetScore().ToString();
+
+            textBlocks[1].Text = player.GetBet().ToString();
+            textBlocks[2].Text = player.GetStatus().ToString();
         }
 
         /// <summary>
@@ -410,15 +303,8 @@ namespace FairPoker
         /// </summary>
         private void SetChance()
         {
-            var player = players.FirstOrDefault();
-            var cards = player.GetCards().Concat(new List<Card>()
-            {
-                card1,
-                card2,
-                card3,
-                card4,
-                card5
-            }.Where(c => c != null));
+            var player = gameState.Players.FirstOrDefault();
+            var cards = player.GetCards().Concat(gameState.TableCards);
             if (cards.Count() < 7)
             {
                 var straightChance = ChanceCalculator.StraightChance(cards);
@@ -482,15 +368,15 @@ namespace FairPoker
         /// </summary>
         public async void Play()
         {
-            foreach (var player in players)
+            foreach (var player in gameState.Players)
             {
                 var t = new Task(() => player.GetScore());
                 t.Start();
             }
 
-            foreach (var player in players)
+            foreach (var player in gameState.Players)
             {
-                if (!player.Equals(players[0]))
+                if (!player.Equals(gameState.Players[0]))
                 {
                     await player.Turn(0); // TODO
                 }
@@ -508,10 +394,10 @@ namespace FairPoker
                 Windows.Storage.StorageFolder folder =
                     await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
                 Windows.Storage.StorageFile file = await folder.GetFileAsync(@filename);
-                Audio.AutoPlay = false;
-                Audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
-                Audio.Volume = 0.3;
-                Audio.Play();
+                audio.AutoPlay = false;
+                audio.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(file);
+                audio.Volume = 0.3;
+                audio.Play();
             }
         }
 
@@ -520,30 +406,29 @@ namespace FairPoker
         /// </summary>
         private async void TurnCard()
         {
-            if (gameState == RoundState.PreFlop)
+            if (gameState.RoundState == RoundState.PreFlop)
             {
-                gameState = RoundState.Flop;
-                var cards = dealer.DealFlop().ToArray();
-                card1 = cards[0];
-                card2 = cards[1];
-                card3 = cards[2];
-                CardImage1.Source = new BitmapImage(new Uri(card1.ImgUrl.ToString()));
-                CardImage2.Source = new BitmapImage(new Uri(card2.ImgUrl.ToString()));
-                CardImage3.Source = new BitmapImage(new Uri(card3.ImgUrl.ToString()));
+                gameState.RoundState = RoundState.Flop;
+                var cards = gameState.Dealer.DealFlop().ToArray();
+                gameState.TableCards.AddRange(cards);
+
+                SetImage(CardImage1, gameState.TableCards[0].ImgUrl.ToString());
+                SetImage(CardImage2, gameState.TableCards[1].ImgUrl.ToString());
+                SetImage(CardImage3, gameState.TableCards[2].ImgUrl.ToString());
                 PlayAudio("card.wav");
             }
-            else if (gameState == RoundState.Flop)
+            else if (gameState.RoundState == RoundState.Flop)
             {
-                gameState = RoundState.Turn;
-                card4 = dealer.DealTurn();
-                CardImage4.Source = new BitmapImage(new Uri(card4.ImgUrl.ToString()));
+                gameState.RoundState = RoundState.Turn;
+                gameState.TableCards.Add(gameState.Dealer.DealTurn());
+                SetImage(CardImage4, gameState.TableCards[3].ImgUrl.ToString());
                 PlayAudio("card.wav");
             }
-            else if (gameState == RoundState.Turn)
+            else if (gameState.RoundState == RoundState.Turn)
             {
-                gameState = RoundState.River;
-                card5 = dealer.DealRiver();
-                CardImage5.Source = new BitmapImage(new Uri(card5.ImgUrl.ToString()));
+                gameState.RoundState = RoundState.River;
+                gameState.TableCards.Add(gameState.Dealer.DealTurn());
+                SetImage(CardImage5, gameState.TableCards[4].ImgUrl.ToString());
                 PlayAudio("card.wav");
             }
             else
@@ -559,55 +444,39 @@ namespace FairPoker
             }
         }
 
+        private void SetImage(Image image, string imgUrl)
+        {
+            image.Source = new BitmapImage(new Uri(imgUrl));
+        }
+
         /// <summary>
         /// Method to show all cards
         /// </summary>
         private void ShowAllCards()
         {
             if (playerCount > 1)
-            {
-                var playerTwoCards = players[1].GetCards().ToArray();
-                GridP2.Visibility = Visibility.Visible;
-                PlayerTwoCardImage1.Source = new BitmapImage(new Uri(playerTwoCards[0].ImgUrl));
-                PlayerTwoCardImage2.Source = new BitmapImage(new Uri(playerTwoCards[1].ImgUrl));
-                PlayerTwoTextHand.Text = players[1].GetScore().ToString();
-            }
+                ShowPlayerCards(gameState.Players[1], PlayerTwoCardImage1, PlayerTwoCardImage2, PlayerTwoTextHand);
 
             if (playerCount > 2)
-            {
-                var playerThreeCards = players[2].GetCards().ToArray();
-                GridP3.Visibility = Visibility.Visible;
-                PlayerThreeCardImage1.Source = new BitmapImage(new Uri(playerThreeCards[0].ImgUrl));
-                PlayerThreeCardImage2.Source = new BitmapImage(new Uri(playerThreeCards[1].ImgUrl));
-                PlayerThreeTextHand.Text = players[2].GetScore().ToString();
-            }
+                ShowPlayerCards(gameState.Players[2], PlayerThreeCardImage1, PlayerThreeCardImage2, PlayerThreeTextHand);
 
             if (playerCount > 3)
-            {
-                var playerFourCards = players[3].GetCards().ToArray();
-                GridP4.Visibility = Visibility.Visible;
-                PlayerFourCardImage1.Source = new BitmapImage(new Uri(playerFourCards[0].ImgUrl));
-                PlayerFourCardImage2.Source = new BitmapImage(new Uri(playerFourCards[1].ImgUrl));
-                PlayerFourTextHand.Text = players[3].GetScore().ToString();
-            }
+                ShowPlayerCards(gameState.Players[3], PlayerFourCardImage1, PlayerFourCardImage2, PlayerFourTextHand);
 
             if (playerCount > 4)
-            {
-                var playerFiveCards = players[4].GetCards().ToArray();
-                GridP2.Visibility = Visibility.Visible;
-                PlayerFiveCardImage1.Source = new BitmapImage(new Uri(playerFiveCards[0].ImgUrl));
-                PlayerFiveCardImage2.Source = new BitmapImage(new Uri(playerFiveCards[1].ImgUrl));
-                PlayerFiveTextHand.Text = players[4].GetScore().ToString();
-            }
+                ShowPlayerCards(gameState.Players[4], PlayerFiveCardImage1, PlayerFiveCardImage2, PlayerFiveTextHand);
 
             if (playerCount > 5)
-            {
-                var playerSixCards = players[5].GetCards().ToArray();
-                GridP2.Visibility = Visibility.Visible;
-                PlayerSixCardImage1.Source = new BitmapImage(new Uri(playerSixCards[0].ImgUrl));
-                PlayerSixCardImage2.Source = new BitmapImage(new Uri(playerSixCards[1].ImgUrl));
-                PlayerSixTextHand.Text = players[5].GetScore().ToString();
-            }
+                ShowPlayerCards(gameState.Players[5], PlayerSixCardImage1, PlayerSixCardImage2, PlayerSixTextHand);
+        }
+
+        private void ShowPlayerCards(Player player, Image image, Image imageTwo, TextBlock handText)
+        {
+            var playerCards = player.GetCards().ToArray();
+            GridP2.Visibility = Visibility.Visible;
+            SetImage(image, playerCards[0].ImgUrl);
+            SetImage(imageTwo, playerCards[1].ImgUrl);
+            handText.Text = player.GetScore().ToString();
         }
 
         /// <summary>
@@ -627,6 +496,7 @@ namespace FairPoker
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: Does this need to do anything? If not, delete it.
         }
 
         private void Next()

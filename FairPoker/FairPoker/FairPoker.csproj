@@ -101,6 +101,7 @@
     <Compile Include="Classes\ChanceCalculator.cs" />
     <Compile Include="Classes\Dealer.cs" />
     <Compile Include="Classes\Deck.cs" />
+    <Compile Include="Classes\GameState.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Scoring.cs" />
     <Compile Include="Classes\Settings.cs" />
