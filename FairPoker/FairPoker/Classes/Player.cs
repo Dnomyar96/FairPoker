@@ -170,7 +170,7 @@ namespace FairPoker.Classes
 
             bet += cash;
             cash = 0;
-            state = PlayerState.Raised;
+            state = PlayerState.AllIn;
         }
 
         /// <summary>
@@ -193,11 +193,12 @@ namespace FairPoker.Classes
         {
             return cash;
         }
-
-
-
-        public async Task Turn()
+        
+        public async Task Turn(int amountRequiredToBet)
         {
+            if (state == PlayerState.AllIn)
+                return;
+
             AIDecisionHandler aIDecisionHandler = new AIDecisionHandler(this);
             Debug.WriteLine(AIDecisionHandler.MakeDecision());
             switch(AIDecisionHandler.MakeDecision())
@@ -206,15 +207,36 @@ namespace FairPoker.Classes
                     AllIn();
                     break;
                 case Plays.Call:
-                    //TODO: We need a callvalue from the AI. We dont know what other players do.
-                    //int amount = aIDecisionHandler.callvalue;
-                    int amount = 0;
+                    // TODO: We need a callvalue from the AI. We dont know what other players do.
+                    // ^ No we don't. Calling means putting in as much money as is required to continue playing. Every player
+                    // needs to put in the same amount (exception being All-In and Fold) to continue. So the amount every player 
+                    // has to bet needs to be stored somewhere. So:                    
+                    int amount = amountRequiredToBet - bettingCash;
+
+                    if (amount <= 0)
+                    {
+                        Check();
+                        break;
+                    }
+
                     Call(amount);
                     break;
                 case Plays.CheckOrFold:
+                    if(amountRequiredToBet > bettingCash)
+                    {
+                        Fold();
+                        break;
+                    }
+
                     Check();
                     break;
                 case Plays.Raise:
+                    if(cash <= 100)
+                    {
+                        AllIn();
+                        break;
+                    }
+
                     Raise(100);
                     break;
             }

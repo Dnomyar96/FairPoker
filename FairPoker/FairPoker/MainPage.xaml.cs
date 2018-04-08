@@ -344,14 +344,14 @@ namespace FairPoker
         private void SetScores()
         {
             tableCards = new List<Card>()
-                {
+            {
 
-                    card1,
-                    card2,
-                    card3,
-                    card4,
-                    card5
-                }.Where(c => c != null).ToList();
+                card1,
+                card2,
+                card3,
+                card4,
+                card5
+            }.Where(c => c != null).ToList();
             
 
             foreach (Player player in players)
@@ -492,7 +492,7 @@ namespace FairPoker
             {
                 if (!player.Equals(players[0]))
                 {
-                    await player.Turn();
+                    await player.Turn(0); // TODO
                 }
             }
         }

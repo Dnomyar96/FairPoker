@@ -16,5 +16,6 @@ namespace FairPoker.Enums
         Raised,
         SmallBlind,
         BigBlind,
+        AllIn
     }
 }
