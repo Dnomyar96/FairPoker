@@ -23,6 +23,7 @@ namespace FairPoker.Classes
 
         public GameState()
         {
+            TableCards = new List<Card>();
             Dealer = new Dealer();
             Players = new List<Player>();
             RoundState = RoundState.PreFlop;

@@ -209,34 +209,34 @@ namespace FairPoker
 
             var playerOneCards = gameState.Players[0].GetCards().ToArray();
             SetImage(PlayerOneCardImage1, playerOneCards[0].ImgUrl);
-            SetImage(PlayerOneCardImage2, playerOneCards[2].ImgUrl);
+            SetImage(PlayerOneCardImage2, playerOneCards[1].ImgUrl);
 
             if (playerCount > 1)
-                SetPlayerCards(gameState.Players[1], PlayerTwoCardImage1, PlayerTwoCardImage2, PlayerTwoTextCash, PlayerTwoTextStatus);
+                SetPlayerCards(gameState.Players[1], PlayerTwoCardImage1, PlayerTwoCardImage2, PlayerTwoTextCash, PlayerTwoTextStatus, GridP2);
 
             if (playerCount > 2)
-                SetPlayerCards(gameState.Players[2], PlayerThreeCardImage1, PlayerThreeCardImage2, PlayerThreeTextCash, PlayerThreeTextStatus);
+                SetPlayerCards(gameState.Players[2], PlayerThreeCardImage1, PlayerThreeCardImage2, PlayerThreeTextCash, PlayerThreeTextStatus, GridP3);
 
             if (playerCount > 3)
-                SetPlayerCards(gameState.Players[3], PlayerFourCardImage1, PlayerFourCardImage2, PlayerFourTextCash, PlayerFourTextStatus);
+                SetPlayerCards(gameState.Players[3], PlayerFourCardImage1, PlayerFourCardImage2, PlayerFourTextCash, PlayerFourTextStatus, GridP4);
 
             if (playerCount > 4)
-                SetPlayerCards(gameState.Players[4], PlayerFiveCardImage1, PlayerFiveCardImage2, PlayerFiveTextCash, PlayerFiveTextStatus);
+                SetPlayerCards(gameState.Players[4], PlayerFiveCardImage1, PlayerFiveCardImage2, PlayerFiveTextCash, PlayerFiveTextStatus, GridP5);
 
             if (playerCount > 5)
-                SetPlayerCards(gameState.Players[5], PlayerSixCardImage1, PlayerSixCardImage2, PlayerSixTextCash, PlayerSixTextStatus);
+                SetPlayerCards(gameState.Players[5], PlayerSixCardImage1, PlayerSixCardImage2, PlayerSixTextCash, PlayerSixTextStatus, GridP6);
 
             SetScores();
             SetChance();
             Play();
         }
 
-        private void SetPlayerCards(Player player, Image image, Image imageTwo, TextBlock cashText, TextBlock statusText)
+        private void SetPlayerCards(Player player, Image image, Image imageTwo, TextBlock cashText, TextBlock statusText, Grid grid)
         {
             var betting = player.BettingCash.ToString();
             var status = player.GetPlayerState().ToString();
 
-            GridP2.Visibility = Visibility.Visible;
+            grid.Visibility = Visibility.Visible;
             if (Settings.HideOtherPlayersCards == false)
             {
                 var cards = player.GetCards().ToArray();
