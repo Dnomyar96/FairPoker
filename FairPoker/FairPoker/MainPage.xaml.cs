@@ -104,9 +104,7 @@ namespace FairPoker
         /// <param name="e"></param>
         private void RaiseButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Raise Logic
-            //Raise the bet by doubling the amount of the big blind. A player may raise more depending on the betting style being played.
-            int amount = 50;
+            int amount = 100;
 
             try
             {
@@ -255,7 +253,7 @@ namespace FairPoker
             {
                 var cards = player.GetCards().ToArray();
                 SetImage(image, cards[0].ImgUrl);
-                SetImage(image, cards[1].ImgUrl);
+                SetImage(imageTwo, cards[1].ImgUrl);
             }
             cashText.Text = "\u20AC" + betting;
             statusText.Text = status;
@@ -457,6 +455,15 @@ namespace FairPoker
                 };
                 ContentDialogResult result = await tempDebugDialog.ShowAsync();
                 ShowAllCards();
+
+                var winner = gameState.Players
+                    .Select(p => new { Player = p, Score = p.GetScore() })
+                    .OrderByDescending(p => p.Score)
+                    .FirstOrDefault()
+                    .Player;
+
+                var pot = gameState.Players.Sum(p => p.BettingCash);
+                winner.GiveCash(pot);
             }
         }
 

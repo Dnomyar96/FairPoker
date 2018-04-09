@@ -20,7 +20,7 @@ namespace FairPoker.Classes
         private Score score;
         private PlayerState state;
 
-        const int defaultbet = 100;
+        const int defaultBet = 100;
 
         public Player()
         {
@@ -39,7 +39,7 @@ namespace FairPoker.Classes
             score = Score.HighCard;
             state = playerState;
             BettingCash = 0;
-            Bet(defaultbet);
+            Bet(defaultBet);
         }
 
         /// <summary>
@@ -51,6 +51,11 @@ namespace FairPoker.Classes
             hand.Add(card);
         }
 
+        public void GiveCash(int cash)
+        {
+            this.cash += cash;
+        }
+
         /// <summary>
         /// Returns the current hand of this player.
         /// </summary>
@@ -58,9 +63,7 @@ namespace FairPoker.Classes
         {
             return hand;
         }
-
-
-
+        
         /// <summary>
         /// Calculates the score for this player
         /// </summary>
@@ -199,11 +202,7 @@ namespace FairPoker.Classes
                 case Plays.AllIn:
                     AllIn();
                     break;
-                case Plays.Call:
-                    // TODO: We need a callvalue from the AI. We dont know what other players do.
-                    // ^ No we don't. Calling means putting in as much money as is required to continue playing. Every player
-                    // needs to put in the same amount (exception being All-In and Fold) to continue. So the amount every player 
-                    // has to bet needs to be stored somewhere. So:                    
+                case Plays.Call:                  
                     int amount = amountRequiredToBet - BettingCash;
 
                     if (amount <= 0)

@@ -24,8 +24,6 @@ namespace FairPoker.Classes
             floors.Add(baseWillingness + 15, Plays.AllIn);
         }
 
-        //TODO: AI needs to know State of players before it in order to properly know what to do.
-
         /// <summary>
         /// Makes a decision based on the current score and chance for a better score.
         /// Returns the Play to make. Raising always with the minimum amount.

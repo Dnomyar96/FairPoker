@@ -9,8 +9,6 @@ namespace FairPoker.Classes
 {
     public class GameState
     {
-        public int Pot { get; set; }
-
         public int RequiredBetPerPlayer { get; set; }
 
         public List<Card> TableCards { get; set; }
