@@ -21,7 +21,7 @@ namespace FairPoker.Classes
 
         public RoundState RoundState { get; set; }
 
-        public GameState()
+        public GameState(List<Player> players = null)
         {
             TableCards = new List<Card>();
             Dealer = new Dealer();
@@ -29,16 +29,23 @@ namespace FairPoker.Classes
             RoundState = RoundState.PreFlop;
             Dealer.NewRound();
             
-            for (var i = 0; i < Settings.PlayerCount; i++)
+            for (var i = 0; i < (players == null ? Settings.PlayerCount : players.Count()); i++)
             {
-                var player = new Player();
+                Player player;
+
+                if (players == null)
+                    player = new Player();
+                else
+                    player = players[i];
 
                 if (i > 0)
                     player.UsesAI = true;
-
-                player.NewRound();
-
-                Players.Add(player);
+                
+                if (player.GetTotalCash() > 0)
+                {
+                    player.NewRound();
+                    Players.Add(player);
+                }
             }
         }
     }

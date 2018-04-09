@@ -21,7 +21,6 @@ namespace FairPoker
     public sealed partial class MainPage : Page
     {
         private GameState gameState;
-        private int playerCount = Settings.PlayerCount;
 
         //Sounds
         MediaPlayer audio;
@@ -131,6 +130,9 @@ namespace FairPoker
         /// <param name="e"></param>
         private void NewRound_Click(object sender, RoutedEventArgs e)
         {
+            ResetChanceLabels();
+            SetDefaultValues();
+            gameState = new GameState(gameState.Players);
             DealCards();
             SetScores();
             SetChance();
@@ -211,20 +213,32 @@ namespace FairPoker
             SetImage(PlayerOneCardImage1, playerOneCards[0].ImgUrl);
             SetImage(PlayerOneCardImage2, playerOneCards[1].ImgUrl);
 
+            var playerCount = gameState.Players.Count();
+
             if (playerCount > 1)
                 SetPlayerCards(gameState.Players[1], PlayerTwoCardImage1, PlayerTwoCardImage2, PlayerTwoTextCash, PlayerTwoTextStatus, GridP2);
+            else
+                GridP2.Visibility = Visibility.Collapsed;
 
             if (playerCount > 2)
                 SetPlayerCards(gameState.Players[2], PlayerThreeCardImage1, PlayerThreeCardImage2, PlayerThreeTextCash, PlayerThreeTextStatus, GridP3);
+            else
+                GridP3.Visibility = Visibility.Collapsed;
 
             if (playerCount > 3)
                 SetPlayerCards(gameState.Players[3], PlayerFourCardImage1, PlayerFourCardImage2, PlayerFourTextCash, PlayerFourTextStatus, GridP4);
+            else
+                GridP4.Visibility = Visibility.Collapsed;
 
             if (playerCount > 4)
                 SetPlayerCards(gameState.Players[4], PlayerFiveCardImage1, PlayerFiveCardImage2, PlayerFiveTextCash, PlayerFiveTextStatus, GridP5);
+            else
+                GridP5.Visibility = Visibility.Collapsed;
 
             if (playerCount > 5)
                 SetPlayerCards(gameState.Players[5], PlayerSixCardImage1, PlayerSixCardImage2, PlayerSixTextCash, PlayerSixTextStatus, GridP6);
+            else
+                GridP6.Visibility = Visibility.Collapsed;
 
             SetScores();
             SetChance();
@@ -273,6 +287,8 @@ namespace FairPoker
             PlayerOneTextHand.Text = gameState.Players[0].GetScore().ToString();
             PlayerOneTotalMoneyText.Text = gameState.Players[0].GetTotalCash().ToString();
 
+            var playerCount = gameState.Players.Count();
+
             if (playerCount > 1)
                 SetPlayerTexts(new TextBlock[] { PlayerTwoTextHand, PlayerTwoTextCash, PlayerTwoTextStatus }, gameState.Players[1]);
 
@@ -294,7 +310,7 @@ namespace FairPoker
             if (Settings.HideOtherPlayersCards == false)
                 textBlocks[0].Text = player.GetScore().ToString();
 
-            textBlocks[1].Text = player.GetBet().ToString();
+            textBlocks[1].Text = player.BettingCash.ToString();
             textBlocks[2].Text = player.GetStatus().ToString();
         }
 
@@ -370,7 +386,7 @@ namespace FairPoker
         {
             foreach (var player in gameState.Players)
             {
-                var t = new Task(() => player.GetScore());
+                var t = new Task(() => player.CalculateScore(gameState.TableCards));
                 t.Start();
             }
 
@@ -378,7 +394,7 @@ namespace FairPoker
             {
                 if (!player.Equals(gameState.Players[0]))
                 {
-                    await player.Turn(0); // TODO
+                    await player.Turn(gameState.RequiredBetPerPlayer);
                 }
             }
         }
@@ -454,6 +470,8 @@ namespace FairPoker
         /// </summary>
         private void ShowAllCards()
         {
+            var playerCount = gameState.Players.Count();
+
             if (playerCount > 1)
                 ShowPlayerCards(gameState.Players[1], PlayerTwoCardImage1, PlayerTwoCardImage2, PlayerTwoTextHand);
 

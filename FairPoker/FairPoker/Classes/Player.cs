@@ -13,13 +13,12 @@ namespace FairPoker.Classes
     {
         public bool UsesAI { get; set; }
         public AIDecisionHandler AIDecisionHandler { get; set; }
-        public int BettingCash { get; set; }
+        public int BettingCash { get; internal set; }
 
         private List<Card> hand;
         private int cash;
         private Score score;
         private PlayerState state;
-        private int bet; // TODO: Review this vs. BettingCash
 
         const int defaultbet = 100;
 
@@ -39,7 +38,7 @@ namespace FairPoker.Classes
             hand = new List<Card>();
             score = Score.HighCard;
             state = playerState;
-            bet = 0;
+            BettingCash = 0;
             Bet(defaultbet);
         }
 
@@ -113,7 +112,7 @@ namespace FairPoker.Classes
                 throw new NotEnoughCashException();
 
             cash -= amount;
-            bet += amount;
+            BettingCash += amount;
             state = PlayerState.Called;
         }
 
@@ -132,7 +131,7 @@ namespace FairPoker.Classes
                 throw new NotEnoughCashException();
 
             cash -= amount;
-            bet += amount;
+            BettingCash += amount;
             state = PlayerState.Bet;
         }
 
@@ -151,7 +150,7 @@ namespace FairPoker.Classes
                 throw new NotEnoughCashException();
 
             cash -= amount;
-            bet += amount;
+            BettingCash += amount;
             state = PlayerState.Raised;
         }
 
@@ -166,7 +165,7 @@ namespace FairPoker.Classes
             if (state == PlayerState.Folded)
                 throw new PlayerFoldedException();
 
-            bet += cash;
+            BettingCash += cash;
             cash = 0;
             state = PlayerState.AllIn;
         }
@@ -179,10 +178,6 @@ namespace FairPoker.Classes
             state = PlayerState.Folded;
         }
         
-        public int GetBet()
-        {
-            return bet;
-        }
         public PlayerState GetStatus()
         {
             return state;
